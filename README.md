@@ -88,15 +88,6 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
-<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
-<!-- prettier-ignore -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-13-orange.svg?style=flat-square)](#contributors)
-
-<table><tr>
-
-<td align="center"><a href="https://codemon.me"><img src="https://avatars.githubusercontent.com/u/32965534?s=400&u=245ed1ae75d4aff453940d096dd8a49fc3a80db6&v=4" width="80px;" alt="Max Stoiber"/><br /><sub><b>codemon</b></sub></a><br /><a href="https://github.com/CeoFred/bondpay-ui/commits?author=CeoFred" title="Code">💻</a> <a href="https://github.com/CeoFred/bondpay-ui/commits?author=CeoFred" title="Documentation">📖</a> <a href="#ideas-CeoFred" title="Ideas, Planning, & Feedback">🤔</a> <a href="#review-CeoFred" title="Reviewed Pull Requests">👀</a> <a href="https://github.com/CeoFred/bondpay-ui/commits?author=CeoFred" title="Tests">⚠️</a></td></tr></table>
-
-<!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
 
