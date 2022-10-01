@@ -1,7 +1,4 @@
 <img src="https://github.com/CeoFred/bondpay-ui/blob/main/demo.png" alt="bondpay banner" align="center" />
-<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors-)
-<!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 <br />
 
@@ -75,12 +72,19 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <table>
   <tbody>
     <tr>
-      <td align="center"><a href="https://www.linkedin.com/in/sadikkuzu/"><img src="https://avatars.githubusercontent.com/u/23168063?v=4?s=100" width="100px;" alt="SADIK KUZU"/><br /><sub><b>SADIK KUZU</b></sub></a><br /><a href="#content-sadikkuzu" title="Content">🖋</a></td>
-      <td align="center"><a href="https://codemon.me"><img src="https://avatars.githubusercontent.com/u/32965534?v=4?s=100" width="100px;" alt="Johnson awah Alfred"/><br /><sub><b>Johnson awah Alfred</b></sub></a><br /><a href="#content-CeoFred" title="Content">🖋</a> <a href="#design-CeoFred" title="Design">🎨</a> <a href="#ideas-CeoFred" title="Ideas, Planning, & Feedback">🤔</a> <a href="https://github.com/CeoFred/bondpay-ui/commits?author=CeoFred" title="Code">💻</a></td>
+      <td align="center"><a href="https://www.linkedin.com/in/sadikkuzu/"><img src="https://avatars.githubusercontent.com/u/23168063?v=4" width="100px;" alt=""/><br /><sub><b>SADIK KUZU</b></sub></a></td>
+      <td align="center"><a href="https://codemon.me"><img src="https://avatars.githubusercontent.com/u/32965534?v=4" width="100px;" alt=""/><br /><sub><b>Johnson awah Alfred</b></sub></a></td>
+      <td align="center"><a href="https://github.com/Dnyaneshvn"><img src="https://avatars.githubusercontent.com/u/78072155?v=4" width="100px;" alt=""/><br /><sub><b>Dnyanesh Nimbalkar</b></sub></a></td>
     </tr>
   </tbody>
   <tfoot>
-    
+    <tr>
+      <td align="center" size="13px" colspan="7">
+        <img src="https://raw.githubusercontent.com/all-contributors/all-contributors-cli/1b8533af435da9854653492b1327a23a4dbd0a10/assets/logo-small.svg">
+          <a href="https://all-contributors.js.org/docs/en/bot/usage">Add your contributions</a>
+        </img>
+      </td>
+    </tr>
   </tfoot>
 </table>
 
