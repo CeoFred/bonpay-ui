@@ -14,6 +14,18 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "CeoFred",
+      "name": "Johnson awah Alfred",
+      "avatar_url": "https://avatars.githubusercontent.com/u/32965534?v=4",
+      "profile": "https://codemon.me",
+      "contributions": [
+        "content",
+        "design",
+        "ideas",
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
