@@ -1,70 +1,96 @@
-# Getting Started with Create React App
+<img src="https://github.com/CeoFred/bondpay-ui/blob/main/demo.png" alt="bondpay banner" align="center" />
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<br />
 
-## Available Scripts
+<div align="center"><strong>Receive payments for service rendered in crypto using different options.</strong></div>
+<div align="center">Go borderless with bondpay, gain access to varities of crypto assets, safe and secured.</div>
 
-In the project directory, you can run:
+<br />
 
-### `npm start`
+<div align="center">
+ 
+  <!-- Test Coverage -->
+  <a href="https://coveralls.io/r/react-boilerplate/react-boilerplate">
+    <img src="https://coveralls.io/repos/github/react-boilerplate/react-boilerplate/badge.svg" alt="Test Coverage" />
+  </a>
+</a>
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+</div>
+<div align="center">
+    <!-- Backers -->
+  
+</div>
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+<br />
 
-### `npm test`
+<div align="center">
+  <sub>Created by <a href="https://twitter.com/codemon_">Johnson-Awah Alfred</a> and maintained with ❤️ by an amazing team of developers.</sub>
+</div>
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Features
 
-### `npm run build`
+<dl>
+  <dt>Wallet Payment</dt>
+  <dd>Send crypto native assets to an address from any browser wallet like metaMask, Coinbase (coming soon) </dd>
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+  <dt>Third Party Transfer</dt>
+  <dd>Use external wallet service providers to send assets to the recepients address and wait for an automatic confirmation of payment.
+  </dd>
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+   <dt>NFT As Payment</dt>
+  <dd>You can offer to transfer ownership of your NFT as a form of payment for service.
+  </dd>
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+  <dt>ERC-20 Tokens</dt>
+  <dd>Merchants can optionally accept an equivalent of another erc-20 token like DAI,USDT,USDC,etc.
+  </dd>
 
-### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+</dl>
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+But wait... there's more!
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+<sub><i>Keywords: Blockchain, Payment, NFT, Swap.</i></sub>
 
-## Learn More
+## Quick start
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+1.  Make sure that you have Node.js v8.15.1 and npm v5 or above installed.
+2.  Clone this repo using `git clone --depth=1 https://github.com/CeoFred/bondpay-ui bondpay-UI`
+3.  Move to the appropriate directory: `cd bondpay-UI`.<br />
+4.  Run `npm run setup` in order to install dependencies and clean the git repo.<br />
+    _At this point you can run `npm start` to see the example app at `http://localhost:3000`._
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Now you're ready to rumble!
 
-### Code Splitting
+> Please note that this boilerplate is **production-ready and not meant for beginners**! If you're just starting out with react or redux, please refer to https://github.com/petehunt/react-howto instead. If you want a solid, battle-tested base to build your next product upon and have some experience with react, this is the perfect start for you.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## Documentation
 
-### Analyzing the Bundle Size
+- [**The Hitchhiker's Guide to `react-boilerplate`**](docs/general/introduction.md): An introduction for newcomers to this boilerplate.
+- [Overview](docs/general): A short overview of the included tools
+- [**Commands**](docs/general/commands.md): Getting the most out of this boilerplate
+- [Testing](docs/testing): How to work with the built-in test harness
+- [Styling](docs/css): How to work with the CSS tooling
+- [Your app](docs/js): Supercharging your app with Routing, Redux, simple
+  asynchronicity helpers, etc.
+- [**Troubleshooting**](docs/general/gotchas.md): Solutions to common problems faced by developers.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## Contributors
 
-### Making a Progressive Web App
+Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore -->
+<table><tr>
 
-### Advanced Configuration
+<td align="center"><a href="https://codemon.me"><img src="https://avatars.githubusercontent.com/u/32965534?s=400&u=245ed1ae75d4aff453940d096dd8a49fc3a80db6&v=4" width="80px;" alt="Max Stoiber"/><br /><sub><b>codemon</b></sub></a><br /><a href="https://github.com/CeoFred/bondpay-ui/commits?author=CeoFred" title="Code">💻</a> <a href="https://github.com/CeoFred/bondpay-ui/commits?author=CeoFred" title="Documentation">📖</a> <a href="#ideas-CeoFred" title="Ideas, Planning, & Feedback">🤔</a> <a href="#review-CeoFred" title="Reviewed Pull Requests">👀</a> <a href="https://github.com/CeoFred/bondpay-ui/commits?author=CeoFred" title="Tests">⚠️</a></td></tr></table>
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+<!-- ALL-CONTRIBUTORS-LIST:END -->
 
-### Deployment
+This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
 
-### `npm run build` fails to minify
+## Supporters
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+This project would not be possible without the support of these amazing folks. [**Become a sponsor**](https://opencollective.com/bondpay) to get your company in front of thousands of engaged react developers and help us out!
