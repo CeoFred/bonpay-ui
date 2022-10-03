@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome</title>
+  <style>
+   @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;700&display=swap');
+   * {
+     font-family: 'Open Sans', sans-serif;
+        font-weight: 500;
+   }
+      .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        flex-direction: column;
+        
+      }
+
+      button {
+        color: black;
+        padding:10px
+      }
+      #error {
+        color: red;
+      }
+
+      #success {
+        color: green;
+      }
+
+      .card {
+        min-width: 30%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #fff;
+        flex-direction: column;
+        box-shadow: 0 4px 15px 0 rgb(0 0 0 / 20%);
+        border-radius: 4px;
+        height: 400px;
+      }
+      .checkout {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    height: 100%;
+    width:100%
+    }
+    .checkout_nav {
+    min-width: 100px;
+    border-radius: 4px 0 0 4px;
+    border-right: 1px solid #eee;
+    -webkit-box-shadow: inset -4px 0 6px rgb(0 0 0 / 2%);
+    box-shadow: inset -4px 0 6px rgb(0 0 0 / 2%);
+   }
+   .checkout_core {
+    -webkit-box-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    padding: 20px;
+}
+.nav {
+    padding: 10px 0 20px 15px;
+}
+
+.nav {
+  position: relative;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    height: 100%;
+    padding: 20px;
+}
+
+ul {
+    list-style: none;
+}
+.welcome-message.desktop-only{
+    padding: 20px 20px 20px 0;
+}
+
+.welcome-message.desktop-only h3 {
+  color: #4e4e4e;
+    font-size: 12px;
+    text-transform: uppercase;
+    font-weight: 700;
+    display: block;
+}
+.nav ul li:first-child {
+    border-top: 1px solid #e6e6e6;
+}
+.nav ul li {
+    border-bottom: 1px solid #e6e6e6;
+    position: relative;
+}
+.nav_items {
+  padding-left: 0;
+}
+.nav ul li a {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    padding: 14px 8px 14px 0;
+    font-weight: 600;
+    color: #6f6f6f;
+    line-height: 18px;
+    font-size: 14px;
+    line-height: 1.4;
+    letter-spacing: -.1px;
+}
+
+
+button {
+  background-color: #40A69E;
+  color: #fff;
+  border:0;
+  border-radius: 6px;
+}
+
+.w-100 {
+  width:100%;
+}
+.checkout_stage {
+    margin: 30px 0 20px;
+    min-height: 200px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+}
+
+.payment_info {
+    position: relative;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #f5f5f5;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+}
+
+.payment_info .merchant_logo{
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    height: 30px;
+}
+.payment_info .merchant_logo img {
+    max-width: 150px;
+    max-height: 100%;
+}
+
+.payment_info .customer_info {
+    -webkit-box-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    text-align: right;
+}
+
+.managedaccount {
+    text-align: center;
+    position: relative;
+    margin-bottom: 10px;
+}
+
+.payment-form {
+    width: 100%;
+}
+
+button.btn-outline {
+  border:1px solid #40A69E;
+  background-color: transparent;
+      display: inline-block;
+    line-height: 1;
+    white-space: nowrap;
+    background: #fff;
+    height: 42px;
+    color: #2f3d4d;
+    border-color: #40A69E;
+    width: 100%;
+    margin: 0 0 5px;
+    text-align: center;
+    -webkit-appearance: none;
+    border-radius: 4px;
+    -webkit-transition: .1s;
+    transition: .1s;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.managedaccount_message {
+  display: block;
+    font-weight: 300;
+    padding: 0 10px;
+    margin-bottom: 20px;
+    color: #011b33;
+    font-size: 14px;
+    line-height: 1.4;
+    letter-spacing: -.1px;
+}
+.customer_address {
+font-size: 0.75rem;
+    color: #59b0aa;
+}
+.customer_balance {
+font-size: 0.75rem;
+}
+.managedaccount__details {
+    background: #f5f5f5;
+    border-radius: 6px;
+    color: #011b33;
+    margin: 0 0 10px;
+    padding: 30px 0 30px;
+    width: 100%;
+}
+
+.network_name {
+  padding:20px;
+}
+img.icon{
+  height: 12px;
+}
+
+.flex-row {
+  display: flex;
+  justify-content: space-between;
+  padding:5px 12px;
+}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <div class="checkout">
+        <div class="checkout_nav">
+          <nav class="nav">
+            <div>
+              <div class="nav_welcome_message">
+                <header>
+                  <div class="welcome-message desktop-only">
+                    <h3>Pay With</h3>
+                  </div>
+                </header>
+              </div>
+              <ul class="nav_items">
+                <li>
+                  <a style="color: #59b0aa;">Wallet</a>
+                </li>
+                <li>
+                  <a>NFT</a>
+                </li>
+                <li>
+                  <a>ERC20-Token</a>
+                </li>
+                <li>
+                  <a>Transfer</a>
+                </li>
+              </ul>
+            </div>
+          </nav>
+        </div>
+        <div class="checkout_core">
+          <header>
+            <div class="payment_info">
+              <div class="merchant_logo">
+                <img src="./logo.png"/>
+              </div>
+              <div class="customer_info">
+                 <button id="connect_wallet">Connect Wallet</button>
+                 <div id="address" class="customer_address"></div>
+                 <div id="balance" class="customer_balance"></div>
+
+              </div>
+
+            </div>
+          </header>
+          <div class="checkout_stage">
+            <section class="payment-form">
+              <div class="managedaccount">
+                <div class="managedaccount_message">
+                  <h3>Send <span style="font-weight: bold" id="amount"></span><span style="font-weight: bold"> MATIC</span> </h3>
+                  <div class="managedaccount__details">
+                    <div class="flex-row">
+                      <span>Network</span>
+                      <span style="color: #59b0aa;font-weight:bold">Polygon Mumbai</span>
+                    </div>
+                    <div class="flex-row">
+                      <span>Receipient</span>
+                      <span><span id="receipient"></span> 
+               <a target="_blank" id="blockexplorer"><img class="icon" src="./open.png" /></a></span>
+                    </div>
+                    <div class="flex-row">
+                      <span>Gas Fee</span>
+                      <span id="gasfee" style="color: #59b0aa;font-weight:bold">-- MATIC</span>
+                    </div>
+            
+                  </div>
+     </div>
+            
+   
+
+    <div id="error"></div>
+    <div id="success"></div>
+            </div>
+            <button id="pay" class="btn-outline w-100">
+              Pay from wallet
+            </button>
+            </section>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+
+ const formatAddress = address => {
+  return address.slice(0, 9) + '...' + address.slice(address.length - 4);
+};
+
+const toEther = (wei,decimals) => {
+  return Number(wei)/10**decimals;
+}
+  const postMessageToListeners = ({ event, data }) => {
+  window.parent && window.parent.postMessage({ type: event, data }, "*");
+  };
+
+ window.addEventListener('load', function(){
+   postMessageToListeners({
+    event:'ready',
+    data: null
+  })
+  postMessageToListeners({event: 'connect.wallet', data: { appOrigin:'http://localhost:5500/popup.html' }})
+
+})
+
+  const payButton = document.getElementById('pay');
+  const errorDiv = document.getElementById('error');
+  const successDiv = document.getElementById('success');
+  const amountDiv = document.getElementById('amount');
+  const receipientDiv = document.getElementById('receipient');
+  const connect_walletButton = document.getElementById('connect_wallet');
+  const balanceDiv = document.getElementById('balance');
+  const customerAddress = document.getElementById('address');
+  const blockexplorerDiv = document.getElementById('blockexplorer');
+  const gasfeeDiv = document.getElementById('gasfee');
+
+  connect_walletButton.addEventListener('click', function(){
+      connect_walletButton.innerHTML = 'Connecting..'
+    postMessageToListeners({event: 'connect.wallet', data: { appOrigin:'http://localhost:5500/popup.html' }})
+  })
+
+  payButton.disabled = true;
+
+  payButton.addEventListener('click', function(){
+     postMessageToListeners({event: 'send.value', data: { value: 5,appOrigin:'http://localhost:5500' }})
+  })
+
+  window.addEventListener("message",function(event){
+
+   if(event.data.type === 'web3connected'){
+      balanceDiv.innerHTML = `${toEther(event.data.balance,18)} MATIC`
+      customerAddress.innerHTML = formatAddress(event.data.account)
+      connect_walletButton.style.display = 'none'
+      payButton.disabled = false;
+
+     
+   }
+
+   if(event.data.type === 'transaction.success'){
+      payButton.innerHTML = 'Pay'
+      successDiv.innerHTML = 'Payment Successful'
+   }
+
+   if(event.data.type === 'sdkData'){
+      amountDiv.innerHTML = event.data.config.value;
+      receipientDiv.innerHTML = formatAddress(event.data.config.recepient)
+       blockexplorerDiv.href  = `https://mumbai.polygonscan.com/address/${event.data.config.recepient}`
+   }
+
+   if(event.data.type === 'transaction.fee'){
+     console.log(event.data)
+     gasfeeDiv.innerHTML = `${event.data.data} MATIC`
+   }
+
+   if(event.data.type === 'error'){
+
+   }
+
+  })
+
+  </script>
+</body>
+</html>

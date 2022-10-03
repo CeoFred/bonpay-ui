@@ -66,14 +66,33 @@ Now you're ready to rumble!
 ## Contributors
 
 Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
-
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
-<!-- prettier-ignore -->
-<table><tr>
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<table>
+  <tbody>
+    <tr>
+      <td align="center"><a href="https://www.linkedin.com/in/sadikkuzu/"><img src="https://avatars.githubusercontent.com/u/23168063?v=4" width="100px;" alt=""/><br /><sub><b>SADIK KUZU</b></sub></a></td>
+      <td align="center"><a href="https://codemon.me"><img src="https://avatars.githubusercontent.com/u/32965534?v=4" width="100px;" alt=""/><br /><sub><b>Johnson awah Alfred</b></sub></a></td>
+      <td align="center"><a href="https://github.com/Dnyaneshvn"><img src="https://avatars.githubusercontent.com/u/78072155?v=4" width="100px;" alt=""/><br /><sub><b>Dnyanesh Nimbalkar</b></sub></a></td>
+    </tr>
+  </tbody>
+  <tfoot>
+    <tr>
+      <td align="center" size="13px" colspan="7">
+        <img src="https://raw.githubusercontent.com/all-contributors/all-contributors-cli/1b8533af435da9854653492b1327a23a4dbd0a10/assets/logo-small.svg">
+          <a href="https://all-contributors.js.org/docs/en/bot/usage">Add your contributions</a>
+        </img>
+      </td>
+    </tr>
+  </tfoot>
+</table>
 
-<td align="center"><a href="https://codemon.me"><img src="https://avatars.githubusercontent.com/u/32965534?s=400&u=245ed1ae75d4aff453940d096dd8a49fc3a80db6&v=4" width="80px;" alt="Max Stoiber"/><br /><sub><b>codemon</b></sub></a><br /><a href="https://github.com/CeoFred/bondpay-ui/commits?author=CeoFred" title="Code">💻</a> <a href="https://github.com/CeoFred/bondpay-ui/commits?author=CeoFred" title="Documentation">📖</a> <a href="#ideas-CeoFred" title="Ideas, Planning, & Feedback">🤔</a> <a href="#review-CeoFred" title="Reviewed Pull Requests">👀</a> <a href="https://github.com/CeoFred/bondpay-ui/commits?author=CeoFred" title="Tests">⚠️</a></td></tr></table>
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
 
 <!-- ALL-CONTRIBUTORS-LIST:END -->
+
 
 This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
 

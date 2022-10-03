@@ -1,0 +1,17 @@
+.btn {
+  border: 0px;
+  background-color: grey;
+  border-radius: 6px;
+  padding: 10px;
+  font-size: 0.9rem;
+}
+
+.btn-default {
+  background: #D9D9D9;
+  color: #000;
+}
+
+.btn-primary {
+  background: #307C7E;
+  color: #FFF;
+}

@@ -1,39 +1,263 @@
-.App {
-  text-align: center;
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;700&display=swap');
+
+* {
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 500;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-  margin-bottom: 3rem;
+
+.text-primary {
+  color: #59b0aa!important;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 10s linear;
-  }
-}
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+
+.container {
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  align-items: center;
+  height: 100vh;
+  flex-direction: column;
+
 }
 
-.App-link {
-  color: #61dafb;
+button {
+  color: black;
+  padding: 10px
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+#error {
+  color: red;
+}
+
+#success {
+  color: green;
+}
+
+.card {
+  min-width: 30%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+  flex-direction: column;
+  box-shadow: 0 4px 15px 0 rgb(0 0 0 / 20%);
+  border-radius: 4px;
+  height: 400px;
+}
+
+.checkout {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  height: 100%;
+  width: 100%
+}
+
+.checkout_nav {
+  min-width: 100px;
+  border-radius: 4px 0 0 4px;
+  border-right: 1px solid #eee;
+  -webkit-box-shadow: inset -4px 0 6px rgb(0 0 0 / 2%);
+  box-shadow: inset -4px 0 6px rgb(0 0 0 / 2%);
+}
+
+.checkout_core {
+  -webkit-box-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  padding: 20px;
+}
+
+.nav {
+  padding: 10px 0 20px 15px;
+}
+
+.nav {
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  height: 100%;
+  padding: 20px;
+}
+
+ul {
+  list-style: none;
+}
+
+.welcome-message.desktop-only {
+  padding: 20px 20px 20px 0;
+}
+
+.welcome-message.desktop-only h3 {
+  color: #4e4e4e;
+  font-size: 12px;
+  text-transform: uppercase;
+  font-weight: 700;
+  display: block;
+}
+
+.nav ul li:first-child {
+  border-top: 1px solid #e6e6e6;
+}
+
+.nav ul li {
+  border-bottom: 1px solid #e6e6e6;
+  position: relative;
+}
+
+.nav_items {
+  padding-left: 0;
+}
+
+.nav ul li a {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  padding: 14px 8px 14px 0;
+  font-weight: 600;
+  color: #6f6f6f;
+  line-height: 18px;
+  font-size: 14px;
+  line-height: 1.4;
+  letter-spacing: -.1px;
+}
+
+
+button {
+  background-color: #40A69E;
+  color: #fff;
+  border: 0;
+  border-radius: 6px;
+}
+
+.w-100 {
+  width: 100%;
+}
+
+.checkout_stage {
+  margin: 30px 0 20px;
+  min-height: 200px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+
+.payment_info {
+  position: relative;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #f5f5f5;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.payment_info .merchant_logo {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  height: 30px;
+}
+
+.payment_info .merchant_logo img {
+  max-width: 150px;
+  max-height: 100%;
+}
+
+.payment_info .customer_info {
+  -webkit-box-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  text-align: right;
+}
+
+.managedaccount {
+  text-align: center;
+  position: relative;
+  margin-bottom: 10px;
+}
+
+.payment-form {
+  width: 100%;
+}
+
+button.btn-outline {
+  border: 1px solid #40A69E;
+  background-color: transparent;
+  display: inline-block;
+  line-height: 1;
+  white-space: nowrap;
+  background: #fff;
+  height: 42px;
+  color: #2f3d4d;
+  border-color: #40A69E;
+  width: 100%;
+  margin: 0 0 5px;
+  text-align: center;
+  -webkit-appearance: none;
+  border-radius: 4px;
+  -webkit-transition: .1s;
+  transition: .1s;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.managedaccount_message {
+  display: block;
+  font-weight: 300;
+  padding: 0 10px;
+  margin-bottom: 20px;
+  color: #011b33;
+  font-size: 14px;
+  line-height: 1.4;
+  letter-spacing: -.1px;
+}
+
+.customer_address {
+  font-size: 0.75rem;
+  color: #59b0aa;
+}
+
+.customer_balance {
+  font-size: 0.75rem;
+}
+
+.managedaccount__details {
+  background: #f5f5f5;
+  border-radius: 6px;
+  color: #011b33;
+  margin: 0 0 10px;
+  padding: 30px 0 30px;
+  width: 100%;
+}
+
+.network_name {
+  padding: 20px;
+}
+
+img.icon {
+  height: 12px;
+}
+
+.flex-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 12px;
 }
