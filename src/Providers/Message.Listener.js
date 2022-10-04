@@ -1,16 +1,13 @@
-import { useEffect } from 'react'
+import { useEffect } from "react";
 
 export default function MessageListener({ children }) {
-
   useEffect(() => {
-    window.addEventListener('message',messageResolver)
-  },[])
+    window.addEventListener("message", messageResolver);
+  }, []);
 
-
-  function messageResolver(event){
+  function messageResolver(event) {
     // console.log(event.data)
   }
-
 
   return children;
 }

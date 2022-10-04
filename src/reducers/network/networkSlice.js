@@ -1,27 +1,26 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  name: '',
-  chainId: '',
+  name: "",
+  chainId: "",
   rpcUrls: [],
-  blockExplorer: '',
-  symbol: '',
-  decimals: '',
-  gasFee:''
-}
+  blockExplorer: "",
+  symbol: "",
+  decimals: "",
+  gasFee: "",
+};
 
 export const networkSlice = createSlice({
-  name: 'network',
+  name: "network",
   initialState,
   reducers: {
-    setUpNetworkConfig: (state,action) => {
-        state = action.payload
-    }
-   
+    setUpNetworkConfig: (state, action) => {
+      state = action.payload;
+    },
   },
-})
+});
 
 // Action creators are generated for each case reducer function
-export const { setUpNetworkConfig } = networkSlice.actions
+export const { setUpNetworkConfig } = networkSlice.actions;
 
-export default networkSlice.reducer
+export default networkSlice.reducer;
