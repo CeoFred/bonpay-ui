@@ -1,13 +1,11 @@
-import React from 'react'
-import ErrorBoundary from './ErrorBoundary'
-import Layout  from './Layout'
+import React from "react";
+import ErrorBoundary from "./ErrorBoundary";
+import Layout from "./Layout";
 
 export default function Wrapper({ children }) {
   return (
     <ErrorBoundary>
-      <Layout>
-          {children} 
-      </Layout> 
+      <Layout>{children}</Layout>
     </ErrorBoundary>
-  )
+  );
 }

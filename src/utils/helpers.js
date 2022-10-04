@@ -1,8 +1,7 @@
-import { ethers } from 'ethers'
+import { ethers } from "ethers";
 
-
-export const formatAddress = address => {
-  return address.slice(0, 9) + '...' + address.slice(address.length - 4);
+export const formatAddress = (address) => {
+  return address.slice(0, 9) + "..." + address.slice(address.length - 4);
 };
 
 export const postMessageToListeners = ({ event, data }) => {
@@ -10,12 +9,12 @@ export const postMessageToListeners = ({ event, data }) => {
 };
 
 export const handleBigNumberFormat = (wei) => {
-  return ethers.BigNumber.from(String((wei)));
-}
+  return ethers.BigNumber.from(String(wei));
+};
 
-export const toEther = (wei,decimals) => {
+export const toEther = (wei, decimals) => {
   return ethers.utils.formatUnits(wei, decimals);
-}
+};
 
 export const roundTo = (n, digits) => {
   var negative = false;
@@ -33,6 +32,4 @@ export const roundTo = (n, digits) => {
     n = (n * -1).toFixed(digits);
   }
   return n;
-}
-
-
+};

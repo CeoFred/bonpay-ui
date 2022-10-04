@@ -1,28 +1,28 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  balance:null,
+  balance: null,
   connected: false,
-  tokens:[],
-  nfts:[],
-  address:'',
-  connecting: false
-}
+  tokens: [],
+  nfts: [],
+  address: "",
+  connecting: false,
+};
 
 export const walletSlice = createSlice({
-  name: 'wallet',
+  name: "wallet",
   initialState,
   reducers: {
     toggleConnectingWallet: (state) => {
-        state.connecting = !state.connecting;
+      state.connecting = !state.connecting;
     },
     connected: (state) => {
-      state.connected =  true;
+      state.connected = true;
       state.connecting = false;
-    }
+    },
   },
-})
+});
 
-export const { toggleConnectingWallet,connected } = walletSlice.actions
+export const { toggleConnectingWallet, connected } = walletSlice.actions;
 
-export default walletSlice.reducer
+export default walletSlice.reducer;

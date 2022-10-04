@@ -1,12 +1,11 @@
-import React from 'react'
-import Home from '../Pages/Home'
+import React from "react";
+import Home from "../Pages/Home";
 
+const Routes = [
+  {
+    path: "/",
+    element: <Home />,
+  },
+];
 
-const Routes =  [
-      {
-      path: "/",
-      element: <Home />,
-     },
-    ]
-
-export default Routes
+export default Routes;

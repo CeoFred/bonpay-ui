@@ -1,16 +1,13 @@
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;700&display=swap");
 
 * {
-  font-family: 'Open Sans', sans-serif;
+  font-family: "Open Sans", sans-serif;
   font-weight: 500;
 }
 
-
 .text-primary {
-  color: #59b0aa!important;
+  color: #59b0aa !important;
 }
-
-
 
 .container {
   display: flex;
@@ -18,12 +15,11 @@
   align-items: center;
   height: 100vh;
   flex-direction: column;
-
 }
 
 button {
   color: black;
-  padding: 10px
+  padding: 10px;
 }
 
 #error {
@@ -51,7 +47,7 @@ button {
   display: -ms-flexbox;
   display: flex;
   height: 100%;
-  width: 100%
+  width: 100%;
 }
 
 .checkout_nav {
@@ -128,12 +124,11 @@ ul {
   line-height: 18px;
   font-size: 14px;
   line-height: 1.4;
-  letter-spacing: -.1px;
+  letter-spacing: -0.1px;
 }
 
-
 button {
-  background-color: #40A69E;
+  background-color: #40a69e;
   color: #fff;
   border: 0;
   border-radius: 6px;
@@ -199,7 +194,7 @@ button {
 }
 
 button.btn-outline {
-  border: 1px solid #40A69E;
+  border: 1px solid #40a69e;
   background-color: transparent;
   display: inline-block;
   line-height: 1;
@@ -207,14 +202,14 @@ button.btn-outline {
   background: #fff;
   height: 42px;
   color: #2f3d4d;
-  border-color: #40A69E;
+  border-color: #40a69e;
   width: 100%;
   margin: 0 0 5px;
   text-align: center;
   -webkit-appearance: none;
   border-radius: 4px;
-  -webkit-transition: .1s;
-  transition: .1s;
+  -webkit-transition: 0.1s;
+  transition: 0.1s;
   font-weight: 500;
   cursor: pointer;
 }
@@ -227,7 +222,7 @@ button.btn-outline {
   color: #011b33;
   font-size: 14px;
   line-height: 1.4;
-  letter-spacing: -.1px;
+  letter-spacing: -0.1px;
 }
 
 .customer_address {
