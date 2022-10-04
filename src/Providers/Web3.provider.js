@@ -195,11 +195,10 @@ const BlockNativeContextProvider = ({ children }) => {
     const previouslyConnectedWallets = JSON.parse(
       window.localStorage.getItem("connectedWallets")
     );
-
+    async function setWalletFromLocalStorage() {
+      await connect({ autoSelect: previouslyConnectedWallets[0] });
+    }
     if (previouslyConnectedWallets?.length) {
-      async function setWalletFromLocalStorage() {
-        await connect({ autoSelect: previouslyConnectedWallets[0] });
-      }
       setWalletFromLocalStorage();
     }
   }, [onBoard, connect]);
