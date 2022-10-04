@@ -1,13 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  name: "",
-  chainId: "",
-  rpcUrls: [],
-  blockExplorer: "",
-  symbol: "",
-  decimals: "",
-  gasFee: "",
+  NETWORK_NAME: "",
+  CHAIN_ID: "",
+  RPC_URLS: [],
+  BLOCK_EXPLORER: [],
+  DECIMALS: "",
+  GAS_FEE: null,
+  NETWORK_ID:null
 };
 
 export const networkSlice = createSlice({
@@ -15,7 +15,13 @@ export const networkSlice = createSlice({
   initialState,
   reducers: {
     setUpNetworkConfig: (state, action) => {
-      state = action.payload;
+      state.NETWORK_NAME = action.payload.NETWORK_NAME;
+      state.CHAIN_ID = action.payload.CHAIN_ID;
+      state.RPC_URLS = action.payload.RPC_URLS;
+      state.DECIMALS = action.payload.DECIMALS;
+      state.CURRENCY_SYMBOL = action.payload.CURRENCY_SYMBOL;
+      state.BLOCK_EXPLORER = action.payload.BLOCK_EXPLORER;
+      state.NETWORK_ID = action.payload.NETWORK_ID;
     },
   },
 });

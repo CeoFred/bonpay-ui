@@ -6,7 +6,8 @@ export const chainConfig = {
     NETWORK_NAME: "Binance Smart Chain",
     CHAIN_ID: "0x38",
     CURRENCY_SYMBOL: "BNB",
-    BLOCK_EXPLORER: "https://bscscan.com",
+    BLOCK_EXPLORER: ["https://bscscan.com/"],
+     DECIMALS: 18
   },
   80001: {
     CHAIN_ID: "0x" + Number(80001).toString(16),
@@ -27,4 +28,28 @@ export const chainConfig = {
     DECIMALS: 18,
     BLOCK_EXPLORER: ["https://explorer.energi.network/"],
   },
+  1: {
+    CHAIN_ID: "0x" + Number(1).toString(16),
+    RPC_URLS: ["https://eth-mainnet.nodereal.io/v1/1659dfb40aa24bbb8153a677b98064d7",'https://rpc.ankr.com/eth','https://eth-mainnet.rpcfast.com?api_key=xbhWBI1Wkguk8SNMu1bvvLurPGLXmgwYeC4S6g2H7WdwFigZSmPWVZRxrskEQwIf'],
+    NETWORK_NAME: "Ethereum Mainnet",
+    CURRENCY_SYMBOL: "ETH",
+    DECIMALS: 18,
+    BLOCK_EXPLORER: ["https://etherscan.io/"],
+  },
+  42: {
+    CHAIN_ID: "0x" + Number(42).toString(16),
+    RPC_URLS: ["https://kovan.infura.io/v3/"],
+    NETWORK_NAME: "Kovan Testnet",
+    CURRENCY_SYMBOL: "KovanETH",
+    DECIMALS: 18,
+    BLOCK_EXPLORER: ["https://kovan.etherscan.io/"],
+  },
+  5: {
+    CHAIN_ID: "0x" + Number(5).toString(16),
+    RPC_URLS: ["https://goerli.infura.io/v3/"],
+    NETWORK_NAME: "Goerli Testnet",
+    CURRENCY_SYMBOL: "GoerliETH",
+    DECIMALS: 18,
+    BLOCK_EXPLORER: ["https://goerli.etherscan.io/"],
+  }
 };

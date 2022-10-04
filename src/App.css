@@ -5,6 +5,10 @@
   font-weight: 500;
 }
 
+body {
+  background: none !important;
+}
+
 .text-primary {
   color: #59b0aa !important;
 }
@@ -24,14 +28,21 @@ button {
 
 #error {
   color: red;
+  font-size: 0.8rem;
+  font-weight: bold;
 }
 
 #success {
   color: green;
 }
 
+.payment_value {
+  margin-bottom: 15px;
+}
+
 .card {
   min-width: 30%;
+  width: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -249,10 +260,12 @@ button.btn-outline {
 
 img.icon {
   height: 12px;
+  margin-left: 5px;
 }
 
 .flex-row {
   display: flex;
   justify-content: space-between;
   padding: 5px 12px;
+  align-items: center;;
 }

@@ -16,13 +16,15 @@ export const walletSlice = createSlice({
     toggleConnectingWallet: (state) => {
       state.connecting = !state.connecting;
     },
-    connected: (state) => {
+    walletConnected: (state,action) => {
       state.connected = true;
       state.connecting = false;
+      state.balance = action.payload.balance;
+      state.address = action.payload.address;
     },
   },
 });
 
-export const { toggleConnectingWallet, connected } = walletSlice.actions;
+export const { toggleConnectingWallet, walletConnected } = walletSlice.actions;
 
 export default walletSlice.reducer;
