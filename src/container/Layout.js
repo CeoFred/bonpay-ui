@@ -11,7 +11,6 @@ import {
 import { useAppDispatch } from "../store";
 
 export default function Layout({ children }) {
-
   const networkState = useSelector(selectNetwork);
 
   const dispatch = useAppDispatch();
@@ -24,28 +23,27 @@ export default function Layout({ children }) {
     address: "0x0",
   });
 
-
   useEffect(() => {
     wallet &&
-      setAccount(prev => ({
+      setAccount((prev) => ({
         ...prev,
         address: formatAddress(wallet.accounts[0]?.address),
-        balance: balance ? toEther(balance, 18) : 0
+        balance: balance ? toEther(balance, 18) : 0,
       }));
 
-     wallet && dispatch(walletConnected({
-       address: (wallet.accounts[0]?.address),
-        balance: balance ? toEther(balance, 18) : 0
-     }));
-
-  }, [wallet,balance]);
+    wallet &&
+      dispatch(
+        walletConnected({
+          address: wallet.accounts[0]?.address,
+          balance: balance ? toEther(balance, 18) : 0,
+        })
+      );
+  }, [wallet, balance]);
 
   async function connectWallet() {
     dispatch(toggleConnectingWallet());
     const ready = await readyToTransact();
-    ready && await connect(networkState.NETWORK_ID)
-    
-
+    ready && (await connect(networkState.NETWORK_ID));
   }
 
   return (
@@ -98,7 +96,9 @@ export default function Layout({ children }) {
                   ) : (
                     <>
                       <div className="customer_address">{account.address}</div>
-                      <div className="customer_balance">{networkState.CURRENCY_SYMBOL} {account.balance}</div>
+                      <div className="customer_balance">
+                        {networkState.CURRENCY_SYMBOL} {account.balance}
+                      </div>
                     </>
                   )}
                 </div>

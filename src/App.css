@@ -3,6 +3,7 @@
 * {
   font-family: "Open Sans", sans-serif;
   font-weight: 500;
+  transition: all 3.5s ease;
 }
 
 body {
@@ -41,8 +42,8 @@ button {
 }
 
 .card {
-  min-width: 30%;
-  width: 50%;
+  min-width: 500px;
+  /* width: 524px; */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -267,5 +268,5 @@ img.icon {
   display: flex;
   justify-content: space-between;
   padding: 5px 12px;
-  align-items: center;;
+  align-items: center;
 }

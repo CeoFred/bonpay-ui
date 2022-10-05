@@ -7,7 +7,7 @@ const initialState = {
   BLOCK_EXPLORER: [],
   DECIMALS: "",
   GAS_FEE: null,
-  NETWORK_ID:null
+  NETWORK_ID: null,
 };
 
 export const networkSlice = createSlice({

@@ -7,7 +7,7 @@ export const chainConfig = {
     CHAIN_ID: "0x38",
     CURRENCY_SYMBOL: "BNB",
     BLOCK_EXPLORER: ["https://bscscan.com/"],
-     DECIMALS: 18
+    DECIMALS: 18,
   },
   80001: {
     CHAIN_ID: "0x" + Number(80001).toString(16),
@@ -30,7 +30,11 @@ export const chainConfig = {
   },
   1: {
     CHAIN_ID: "0x" + Number(1).toString(16),
-    RPC_URLS: ["https://eth-mainnet.nodereal.io/v1/1659dfb40aa24bbb8153a677b98064d7",'https://rpc.ankr.com/eth','https://eth-mainnet.rpcfast.com?api_key=xbhWBI1Wkguk8SNMu1bvvLurPGLXmgwYeC4S6g2H7WdwFigZSmPWVZRxrskEQwIf'],
+    RPC_URLS: [
+      "https://eth-mainnet.nodereal.io/v1/1659dfb40aa24bbb8153a677b98064d7",
+      "https://rpc.ankr.com/eth",
+      "https://eth-mainnet.rpcfast.com?api_key=xbhWBI1Wkguk8SNMu1bvvLurPGLXmgwYeC4S6g2H7WdwFigZSmPWVZRxrskEQwIf",
+    ],
     NETWORK_NAME: "Ethereum Mainnet",
     CURRENCY_SYMBOL: "ETH",
     DECIMALS: 18,
@@ -51,5 +55,13 @@ export const chainConfig = {
     CURRENCY_SYMBOL: "GoerliETH",
     DECIMALS: 18,
     BLOCK_EXPLORER: ["https://goerli.etherscan.io/"],
+  },
+  97: {
+     CHAIN_ID: "0x" + Number(97).toString(16),
+    RPC_URLS: ["https://data-seed-prebsc-1-s1.binance.org:8545/"],
+    NETWORK_NAME: "BSC Testnet",
+    CURRENCY_SYMBOL: "tBNB",
+    DECIMALS: 18,
+    BLOCK_EXPLORER: ["https://testnet.bscscan.com/"],
   }
 };

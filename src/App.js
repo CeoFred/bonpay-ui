@@ -12,7 +12,6 @@ import MessageListenerProvider from "./Providers/Message.Listener";
 function App() {
   return (
     <Provider store={store}>
-      
       <ChakraProvider theme={chakraUItheme}>
         <BlockNativeContextProvider>
           <MessageListenerProvider />

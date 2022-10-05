@@ -16,7 +16,7 @@ export const walletSlice = createSlice({
     toggleConnectingWallet: (state) => {
       state.connecting = !state.connecting;
     },
-    walletConnected: (state,action) => {
+    walletConnected: (state, action) => {
       state.connected = true;
       state.connecting = false;
       state.balance = action.payload.balance;

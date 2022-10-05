@@ -9,7 +9,7 @@ export const store = configureStore({
   reducer: {
     network: networkReducer,
     wallet: walletReducer,
-    transaction: transactionReducer
+    transaction: transactionReducer,
   },
 });
 

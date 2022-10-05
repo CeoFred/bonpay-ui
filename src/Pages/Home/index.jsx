@@ -1,126 +1,208 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { selectNetwork } from "../../reducers/network/selector";
-import {  selectTranction } from "../../reducers/transaction/selector";
-import { initTransction,transactionSuccessfull,transactionFailed } from "../../reducers/transaction/transactionSlice"
-import { formatAddress } from '../../utils/helpers'
-import OpenIcon from '../../assets/icons/open.png'
+import { selectTranction } from "../../reducers/transaction/selector";
+import {
+  initTransction,
+  transactionSuccessfull,
+  transactionFailed,
+} from "../../reducers/transaction/transactionSlice";
+import { formatAddress, postMessageToListeners } from "../../utils/helpers";
+import OpenIcon from "../../assets/icons/open.png";
 import { useAppDispatch } from "../../store";
-import { Spinner } from '@chakra-ui/react'
 import { useBlockNative } from "../../Providers/Web3.provider";
 import {
   Alert,
   AlertIcon,
   AlertTitle,
   AlertDescription,
-} from '@chakra-ui/react'
+  Button,
+  Text,
+  Stack,
+} from "@chakra-ui/react";
 
 export default function Home() {
-
   const dispatch = useAppDispatch();
 
   const networkState = useSelector(selectNetwork);
   const transactionState = useSelector(selectTranction);
-  const { transferNativeToken } =
-    useBlockNative();
+  const { transferNativeToken, connected } = useBlockNative();
 
   const [timeLeft, setTimeLeft] = useState(10);
   const [countdownId, setCountdownId] = useState(null);
-
-
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    if(timeLeft === 0){
-        window.clearInterval(countdownId)
+    if (timeLeft === 0) {
+      window.clearInterval(countdownId);
+      closeBondPay(true,"script")
     }
-  }, [timeLeft])
-  
-  function getAccountExplorer(address){
-    return `${networkState.BLOCK_EXPLORER[0]}address/${address}`
+  }, [timeLeft]);
+
+  function getAccountExplorer(address) {
+    return `${networkState.BLOCK_EXPLORER[0]}address/${address}`;
   }
 
-  function getTransactionExplorer(hash){
-    return `${networkState.BLOCK_EXPLORER[0]}tx/${hash}`
+  function getTransactionExplorer(hash) {
+    return `${networkState.BLOCK_EXPLORER[0]}tx/${hash}`;
   }
 
-  function initCountdown(){
-    setCountdownId(setInterval(() => {
-      setTimeLeft(P => P-1);
-    }, 1000))
+  function initCountdown(transaction) {
+
+    setCountdownId(
+      setInterval(() => {
+        setTimeLeft((P) => P - 1);
+      }, 1000)
+    );
+    delete transaction.wait;
+
+    postMessageToListeners({
+      event: "pay.success",
+      data: transaction
+    });
   }
 
- async function handleWalletTransfer(){
+  function closeBondPay(completed,action) {
+    postMessageToListeners({
+      event: "pay.exit",
+      data: {completed,action}
+    });
+  }
 
-    await dispatch(initTransction({
-      TYPE: "WALLET_TRANSFER",
-      STATUS: "IN_PROGRESS"
-    }))
+  async function handleWalletTransfer() {
+    setError(null);
+
+    if (!connected) {
+      setError("Wallet Not Connected");
+      return;
+    }
+
+    await dispatch(
+      initTransction({
+        TYPE: "WALLET_TRANSFER",
+        STATUS: "IN_PROGRESS",
+      })
+    );
 
     try {
-    const txn = await transferNativeToken(
-      String(transactionState.VALUE),
-      transactionState.RECEPIENT
-    )
-    txn.wait();
+      const txn = await transferNativeToken(
+        String(transactionState.VALUE),
+        transactionState.RECEPIENT
+      );
+       await txn.wait(2);
 
-    setTimeout(async () => {
-      await dispatch(transactionSuccessfull({
-      TYPE: "WALLET_TRANSFER",
-      STATUS: "SUCCESS",
-      TRANSACTION:txn.hash
-    }))
-    initCountdown();
-    }, 3000);
-      
+      setTimeout(async () => {
+        await dispatch(
+          transactionSuccessfull({
+            TYPE: "WALLET_TRANSFER",
+            STATUS: "SUCCESS",
+            TRANSACTION: txn.hash,
+          })
+        );
+        initCountdown(txn);
+      }, 1000);
+
     } catch (error) {
 
-      await dispatch(transactionFailed({
-      TYPE: "WALLET_TRANSFER",
-      STATUS: "FAILED",
-      MESSAGE: error
-      }))
+      await dispatch(
+        transactionFailed({
+          TYPE: "WALLET_TRANSFER",
+          STATUS: "FAILED",
+          MESSAGE: "Something went wrong",
+        })
+      );
 
     }
   }
 
-
-   function parseErrorMessage(error){
-    console.log(error)
-    return 'Whoops! Something went wrong'
+  function parseErrorMessage(error) {
+    console.log(error);
+    return "Whoops! Something went wrong";
   }
 
-  if(transactionState.COMPLETED ===  true){
-    return <Alert
-  status='success'
-  variant='subtle'
-  flexDirection='column'
-  alignItems='center'
-  justifyContent='center'
-  textAlign='center'
-  height='auto'
-  backgroundColor={"rgba(64, 166, 158, 0.67)"}
-  borderRadius="6px"
->
-  <AlertIcon boxSize='40px' mr={0} color={"#40a69e"} />
-  <AlertTitle mt={4} mb={1} fontSize='lg'>
-    Transaction Successfull!
-  </AlertTitle>
-  <AlertDescription maxWidth='sm'mt="1rem">
-      You just sent {transactionState.VALUE} {networkState.CURRENCY_SYMBOL} to {transactionState.RECEPIENT}.
-      View the status of this transaction <a target="_blank" rel="noreferrer" href={getTransactionExplorer(transactionState.TRANSACTION)}>here.</a>
-  </AlertDescription>
+  if (transactionState.ERROR_MESSAGE) {
+    return (
+      <Alert
+        status="error"
+        variant="subtle"
+        flexDirection="column"
+        alignItems="center"
+        justifyContent="center"
+        textAlign="center"
+        height="auto"
+        borderRadius="6px"
+      >
+        <AlertIcon boxSize="40px" mr={0} my="1rem" />
+        <AlertTitle mt={4} mb={1} fontSize="lg">
+          Transaction Failed!
+        </AlertTitle>
 
+        <AlertDescription my="10px" fontSize={"0.7rem"} fontWeight="bold">
+          <Stack direction="row" spacing={4}>
+            <Button colorScheme={"red"} onClick={handleWalletTransfer}>
+              Try Again
+            </Button>
+            <Button
+              colorScheme={"red"}
+              variant="outline"
+              onClick={() => closeBondPay(false,"user")}
+            >
+              Close
+            </Button>
+          </Stack>
+        </AlertDescription>
+      </Alert>
+    );
+  }
 
-  <AlertDescription my="10px" fontSize={"0.7rem"} fontWeight="bold">Closing Dialog in {timeLeft} Seconds.</AlertDescription>
-</Alert>
+  if (transactionState.COMPLETED === true) {
+    return (
+      <Alert
+        status="success"
+        variant="subtle"
+        flexDirection="column"
+        alignItems="center"
+        justifyContent="center"
+        textAlign="center"
+        height="auto"
+        backgroundColor={"#40a79f4d"}
+        borderRadius="6px"
+      >
+        <AlertIcon boxSize="40px" mr={0} color={"#40a69e"} my="1rem" />
+        <AlertTitle mt={4} mb={1} fontSize="lg">
+          Transaction Successfull!
+        </AlertTitle>
+        <AlertDescription maxWidth="sm" mt="1rem">
+          You just sent {transactionState.VALUE} {networkState.CURRENCY_SYMBOL}{" "}
+          to {transactionState.RECEPIENT}. View the status of this transaction{" "}
+          <a
+            style={{ color: "blue" }}
+            target="_blank"
+            rel="noreferrer"
+            href={getTransactionExplorer(transactionState.TRANSACTION)}
+          >
+            here.
+          </a>
+        </AlertDescription>
+
+        <AlertDescription my="10px" fontSize={"0.7rem"} fontWeight="bold">
+          Closing Dialog in {timeLeft} Seconds.
+        </AlertDescription>
+      </Alert>
+    );
   }
   return (
     <section className="payment-form">
       <div className="managedaccount">
         <div className="managedaccount_message">
           <h3 className="payment_value">
-            Send <span style={{ fontWeight: "bold" }} >{transactionState.VALUE}  {" "}</span>
-            <span style={{ fontWeight: "bold" }}>{networkState.CURRENCY_SYMBOL}</span>{" "}
+            Send{" "}
+            <span style={{ fontWeight: "bold" }}>
+              {transactionState.VALUE}{" "}
+            </span>
+            <span style={{ fontWeight: "bold" }}>
+              {networkState.CURRENCY_SYMBOL}
+            </span>{" "}
           </h3>
           <div className="managedaccount__details">
             <div className="flex-row">
@@ -132,9 +214,16 @@ export default function Home() {
             <div className="flex-row">
               <span>Receipient</span>
               <span className="flex-row">
-                <span id="receipient">{formatAddress(transactionState.RECEPIENT)}</span>
-                <a target="_blank" rel="noreferrer" id="blockexplorer" href={getAccountExplorer(transactionState.RECEPIENT)}>
-                  {' '}
+                <span id="receipient">
+                  {formatAddress(transactionState.RECEPIENT)}
+                </span>
+                <a
+                  target="_blank"
+                  rel="noreferrer"
+                  id="blockexplorer"
+                  href={getAccountExplorer(transactionState.RECEPIENT)}
+                >
+                  {" "}
                   <img className="icon" src={OpenIcon} />
                 </a>
               </span>
@@ -151,13 +240,28 @@ export default function Home() {
           </div>
         </div>
 
-        <div id="error"></div>
-
-        <div id="error">{transactionState.ERROR_MESSAGE ? parseErrorMessage(transactionState.ERROR_MESSAGE) : ''}</div>
+        <div>
+          {error ? (
+            <Text fontSize="10px" color="tomato">
+              {error}
+            </Text>
+          ) : (
+            ""
+          )}
+        </div>
       </div>
-      <button disabled={transactionState.STATUS !== "idle"} onClick={handleWalletTransfer} className="btn-outline w-100">
-       {transactionState.STATUS === "idle" ?  "Proceed"  : <Spinner /> }
-      </button>
+
+      <Button
+        isLoading={transactionState.STATUS !== "idle"}
+        loadingText="Processing.."
+        colorScheme="teal"
+        variant="outline"
+        w="100%"
+        onClick={handleWalletTransfer}
+        disabled={!connected || transactionState.STATUS !== "idle"}
+      >
+        Proceed
+      </Button>
     </section>
   );
 }

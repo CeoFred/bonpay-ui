@@ -5,8 +5,8 @@ const initialState = {
   VALUE: 0,
   RECEPIENT: "",
   STATUS: "idle",
-  ERROR_MESSAGE:"",
-  COMPLETED: false
+  ERROR_MESSAGE: null,
+  COMPLETED: false,
 };
 
 export const transactionSlice = createSlice({
@@ -27,17 +27,22 @@ export const transactionSlice = createSlice({
       state.STATUS = "idle";
       state.ERROR_MESSAGE = null;
       state.COMPLETED = true;
-      state.TRANSACTION =  action.payload.TRANSACTION
+      state.TRANSACTION = action.payload.TRANSACTION;
     },
     transactionFailed: (state, action) => {
       state.STATUS = "idle";
       state.ERROR_MESSAGE = action.payload.MESSAGE;
       state.COMPLETED = false;
-      state.TRANSACTION =  null
-    }
+      state.TRANSACTION = null;
+    },
   },
 });
 
-export const { transactionSuccessfull,setUpTransactionDetails,initTransction ,transactionFailed} = transactionSlice.actions;
+export const {
+  transactionSuccessfull,
+  setUpTransactionDetails,
+  initTransction,
+  transactionFailed,
+} = transactionSlice.actions;
 
 export default transactionSlice.reducer;
