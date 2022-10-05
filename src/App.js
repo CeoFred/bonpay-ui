@@ -12,9 +12,9 @@ import MessageListenerProvider from "./Providers/Message.Listener";
 function App() {
   return (
     <Provider store={store}>
-      <MessageListenerProvider />
       <ChakraProvider theme={chakraUItheme}>
         <BlockNativeContextProvider>
+          <MessageListenerProvider />
           <Wrapper>
             <RouterProvider router={router} />
           </Wrapper>

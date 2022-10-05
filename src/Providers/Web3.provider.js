@@ -37,9 +37,45 @@ export const initWeb3Onboard = init({
       label: chainConfig[80001].NETWORK_NAME,
       rpcUrl: chainConfig[80001].RPC_URLS[0],
     },
+    {
+      id: chainConfig[39797].CHAIN_ID,
+      token: chainConfig[39797].CURRENCY_SYMBOL,
+      label: chainConfig[39797].NETWORK_NAME,
+      rpcUrl: chainConfig[39797].RPC_URLS[0],
+    },
+    {
+      id: chainConfig[56].CHAIN_ID,
+      token: chainConfig[56].CURRENCY_SYMBOL,
+      label: chainConfig[56].NETWORK_NAME,
+      rpcUrl: chainConfig[56].RPC_URLS[0],
+    },
+    {
+      id: chainConfig[1].CHAIN_ID,
+      token: chainConfig[1].CURRENCY_SYMBOL,
+      label: chainConfig[1].NETWORK_NAME,
+      rpcUrl: chainConfig[1].RPC_URLS[0],
+    },
+    {
+      id: chainConfig[5].CHAIN_ID,
+      token: chainConfig[5].CURRENCY_SYMBOL,
+      label: chainConfig[5].NETWORK_NAME,
+      rpcUrl: chainConfig[5].RPC_URLS[0],
+    },
+    {
+      id: chainConfig[42].CHAIN_ID,
+      token: chainConfig[42].CURRENCY_SYMBOL,
+      label: chainConfig[42].NETWORK_NAME,
+      rpcUrl: chainConfig[42].RPC_URLS[0],
+    },
+		{
+      id: chainConfig[97].CHAIN_ID,
+      token: chainConfig[97].CURRENCY_SYMBOL,
+      label: chainConfig[97].NETWORK_NAME,
+      rpcUrl: chainConfig[97].RPC_URLS[0],
+    },
   ],
   appMetadata: {
-    name: "Block Pay",
+    name: "BonPay",
     icon: blockPayLogo,
     logo: blockPayLogo,
     description:
@@ -50,10 +86,10 @@ export const initWeb3Onboard = init({
     ],
     agreement: {
       version: "1.0.0",
-      termsUrl: "https://blockpay.org/terms-and-conditions",
+      termsUrl: "https://bonpay.codemon.me/terms-and-conditions",
     },
-    gettingStartedGuide: "https://blockpay.org",
-    explore: "https://blockpay.org",
+    gettingStartedGuide: "https://bonpay.codemon.me",
+    explore: "https://bonpay.codemon.me",
   },
   // accountCenter: {
   //   desktop: {
@@ -88,11 +124,11 @@ const BlockNativeContextProvider = ({ children }) => {
     setWeb3Onboard(initWeb3Onboard);
   }, []);
 
-  async function switchOrRegisterChain() {
+  async function switchOrRegisterChain(CHAIN_ID) {
     try {
       await window.ethereum.request({
         method: "wallet_switchEthereumChain",
-        params: [{ chainId: chainConfig[80001].CHAIN_ID }],
+        params: [{ chainId: chainConfig[CHAIN_ID].CHAIN_ID }],
       });
     } catch (switchError) {
       // This error code indicates that the chain has not been added to MetaMask.
@@ -102,9 +138,9 @@ const BlockNativeContextProvider = ({ children }) => {
             method: "wallet_addEthereumChain",
             params: [
               {
-                chainId: chainConfig[80001].CHAIN_ID,
-                chainName: chainConfig[80001].NETWORK_NAME,
-                rpcUrls: chainConfig[80001].RPC_URLS /* ... */,
+                chainId: chainConfig[CHAIN_ID].CHAIN_ID,
+                chainName: chainConfig[CHAIN_ID].NETWORK_NAME,
+                rpcUrls: chainConfig[CHAIN_ID].RPC_URLS /* ... */,
               },
             ],
           });
@@ -119,17 +155,17 @@ const BlockNativeContextProvider = ({ children }) => {
   async function fetchNativeBalance(address, provider) {
     const balance = await provider.getBalance(address);
     setNativeBalance(balance.toString());
-    console.log(balance.toString());
     return balance;
   }
 
-  async function connectWallet() {
+  async function connectWallet(CHAIN_ID) {
     await initialize();
-    await onBoard.setChain({
-      chainId: chainConfig[80001].CHAIN_ID,
-    });
     await connect();
     await setConnected(true);
+    await switchOrRegisterChain(CHAIN_ID);
+    await onBoard.setChain({
+      chainId: chainConfig[CHAIN_ID].CHAIN_ID,
+    });
   }
 
   async function initialize() {
@@ -151,16 +187,17 @@ const BlockNativeContextProvider = ({ children }) => {
       });
       setConnected(true);
     }
+
+    return onboard;
   }
 
-  useEffect(() => {
-    try {
-      initialize();
-    } catch (error) {
-      console.log(error);
-      formatState();
-    }
-  }, []);
+  async function transferNativeToken(ether, receipient) {
+    const txn = await signer.sendTransaction({
+      to: receipient,
+      value: ethers.utils.parseEther(ether),
+    });
+    return txn;
+  }
 
   useEffect(() => {
     if (!connectedWallets.length) return;
@@ -184,24 +221,24 @@ const BlockNativeContextProvider = ({ children }) => {
     } else {
       provider = new ethers.providers.Web3Provider(_wallet.provider, "any");
       setProvider(provider);
-      console.log(_wallet);
+      setSigner(provider.getSigner());
       _wallet &&
         fetchNativeBalance(_wallet.accounts[0].address, provider) &&
         setWallet(_wallet);
     }
   }, [_wallet]);
 
-  useEffect(() => {
-    const previouslyConnectedWallets = JSON.parse(
-      window.localStorage.getItem("connectedWallets")
-    );
-    async function setWalletFromLocalStorage() {
-      await connect({ autoSelect: previouslyConnectedWallets[0] });
-    }
-    if (previouslyConnectedWallets?.length) {
-      setWalletFromLocalStorage();
-    }
-  }, [onBoard, connect]);
+  // useEffect(() => {
+  //   const previouslyConnectedWallets = JSON.parse(
+  //     window.localStorage.getItem("connectedWallets")
+  //   );
+  //   async function setWalletFromLocalStorage() {
+  //     await connect({ autoSelect: previouslyConnectedWallets[0] });
+  //   }
+  //   if (previouslyConnectedWallets?.length) {
+  //     setWalletFromLocalStorage();
+  //   }
+  // }, [onBoard, connect]);
 
   async function disconnectWallet() {
     await window.localStorage.removeItem("connectedWallets");
@@ -246,6 +283,7 @@ const BlockNativeContextProvider = ({ children }) => {
         connected,
         balance: nativeBalance,
         connecting,
+        transferNativeToken,
       }}
     >
       {children}

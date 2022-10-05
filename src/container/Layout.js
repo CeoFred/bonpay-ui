@@ -5,13 +5,14 @@ import { formatAddress, toEther, roundTo } from "../utils/helpers";
 import { useSelector } from "react-redux";
 import { selectNetwork } from "../reducers/network/selector";
 import {
-  connected,
+  walletConnected,
   toggleConnectingWallet,
 } from "../reducers/wallet/walletSlice";
 import { useAppDispatch } from "../store";
 
 export default function Layout({ children }) {
   const networkState = useSelector(selectNetwork);
+
   const dispatch = useAppDispatch();
 
   const { connecting, connected, wallet, balance, connect, readyToTransact } =
@@ -23,24 +24,26 @@ export default function Layout({ children }) {
   });
 
   useEffect(() => {
-    balance &&
-      setAccount({ ...account, balance: roundTo(toEther(balance, 18), 6) });
-    console.log(balance);
-  }, [balance]);
-
-  useEffect(() => {
     wallet &&
-      setAccount({
-        ...account,
+      setAccount((prev) => ({
+        ...prev,
         address: formatAddress(wallet.accounts[0]?.address),
-      });
-  }, [wallet]);
+        balance: balance ? toEther(balance, 18) : 0,
+      }));
+
+    wallet &&
+      dispatch(
+        walletConnected({
+          address: wallet.accounts[0]?.address,
+          balance: balance ? toEther(balance, 18) : 0,
+        })
+      );
+  }, [wallet, balance]);
 
   async function connectWallet() {
     dispatch(toggleConnectingWallet());
     const ready = await readyToTransact();
-    ready && (await connect());
-    dispatch(connected());
+    ready && (await connect(networkState.NETWORK_ID));
   }
 
   return (
@@ -93,7 +96,9 @@ export default function Layout({ children }) {
                   ) : (
                     <>
                       <div className="customer_address">{account.address}</div>
-                      <div className="customer_balance">{account.balance}</div>
+                      <div className="customer_balance">
+                        {networkState.CURRENCY_SYMBOL} {account.balance}
+                      </div>
                     </>
                   )}
                 </div>
