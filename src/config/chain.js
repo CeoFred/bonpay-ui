@@ -63,5 +63,13 @@ export const chainConfig = {
     CURRENCY_SYMBOL: "tBNB",
     DECIMALS: 18,
     BLOCK_EXPLORER: ["https://testnet.bscscan.com/"],
+  },
+  137: {
+     CHAIN_ID: "0x" + Number(137).toString(16),
+    RPC_URLS: ["https://polygon-mainnet.g.alchemy.com/v2/FDaxG4jpaYHddzfeC_4TMAH2EJoF5jLa/"],
+    NETWORK_NAME: "Polygon Mainnet",
+    CURRENCY_SYMBOL: "MATIC",
+    DECIMALS: 18,
+    BLOCK_EXPLORER: ["https://explorer.matic.network/"],
   }
 };

@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from "react";
+import { Icon } from '@chakra-ui/react'
+import { CloseIcon } from '@chakra-ui/icons'
+import { FaHeart } from 'react-icons/fa'
+
 import Button from "../components/Button";
 import { useBlockNative } from "../Providers/Web3.provider";
-import { formatAddress, toEther, roundTo } from "../utils/helpers";
+import { formatAddress, toEther, postMessageToListeners } from "../utils/helpers";
 import { useSelector } from "react-redux";
 import { selectNetwork } from "../reducers/network/selector";
 import {
@@ -9,7 +13,7 @@ import {
   toggleConnectingWallet,
 } from "../reducers/wallet/walletSlice";
 import { useAppDispatch } from "../store";
-
+import {Text} from "@chakra-ui/react";
 export default function Layout({ children }) {
   const networkState = useSelector(selectNetwork);
 
@@ -46,8 +50,17 @@ export default function Layout({ children }) {
     ready && (await connect(networkState.NETWORK_ID));
   }
 
+
+  async function closeBondPay(){
+     postMessageToListeners({
+      event: "pay.exit",
+      data: {completed:false,action:'user'}
+    });
+  }
+
   return (
     <div className="container">
+      <CloseIcon cursor={"pointer"} color="#fff" mb="15px" onClick={closeBondPay}/>
       <div className="card">
         <div className="checkout">
           <div className="checkout_nav">
@@ -72,6 +85,9 @@ export default function Layout({ children }) {
                   </li>
                   <li>
                     <a>Transfer</a>
+                  </li>
+                  <li>
+                    <a>Bridge</a>
                   </li>
                 </ul>
               </div>
@@ -108,6 +124,9 @@ export default function Layout({ children }) {
           </div>
         </div>
       </div>
+
+      <Text my="10px" color="#fff">Made with <Icon color="red" as={FaHeart} /> by <a target="_blank" rel="noreferrer" href="https://twitter.com/codemon_">codemon_</a>
+      </Text>
     </div>
   );
 }

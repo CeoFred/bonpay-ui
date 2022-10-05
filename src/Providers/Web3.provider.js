@@ -73,6 +73,12 @@ export const initWeb3Onboard = init({
       label: chainConfig[97].NETWORK_NAME,
       rpcUrl: chainConfig[97].RPC_URLS[0],
     },
+		{
+      id: chainConfig[137].CHAIN_ID,
+      token: chainConfig[137].CURRENCY_SYMBOL,
+      label: chainConfig[137].NETWORK_NAME,
+      rpcUrl: chainConfig[137].RPC_URLS[0],
+    },
   ],
   appMetadata: {
     name: "BonPay",
