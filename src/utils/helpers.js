@@ -1,4 +1,5 @@
 import { ethers } from "ethers";
+export { fetchNfts } from './moralis.api'
 
 export const formatAddress = (address) => {
   return address.slice(0, 9) + "..." + address.slice(address.length - 4);

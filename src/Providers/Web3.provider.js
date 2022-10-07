@@ -32,6 +32,12 @@ export const initWeb3Onboard = init({
   wallets: [injected, coinbase, walletConnect],
   chains: [
     {
+      id: chainConfig[4].CHAIN_ID,
+      token: chainConfig[4].CURRENCY_SYMBOL,
+      label: chainConfig[4].NETWORK_NAME,
+      rpcUrl: chainConfig[4].RPC_URLS[0],
+    },
+    {
       id: chainConfig[80001].CHAIN_ID,
       token: chainConfig[80001].CURRENCY_SYMBOL,
       label: chainConfig[80001].NETWORK_NAME,
@@ -67,13 +73,13 @@ export const initWeb3Onboard = init({
       label: chainConfig[42].NETWORK_NAME,
       rpcUrl: chainConfig[42].RPC_URLS[0],
     },
-		{
+    {
       id: chainConfig[97].CHAIN_ID,
       token: chainConfig[97].CURRENCY_SYMBOL,
       label: chainConfig[97].NETWORK_NAME,
       rpcUrl: chainConfig[97].RPC_URLS[0],
     },
-		{
+    {
       id: chainConfig[137].CHAIN_ID,
       token: chainConfig[137].CURRENCY_SYMBOL,
       label: chainConfig[137].NETWORK_NAME,

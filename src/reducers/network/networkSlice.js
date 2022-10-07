@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   NETWORK_NAME: "",
-  CHAIN_ID: "",
+  CHAIN_ID: null,
   RPC_URLS: [],
   BLOCK_EXPLORER: [],
   DECIMALS: "",

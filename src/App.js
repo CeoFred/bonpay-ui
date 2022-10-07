@@ -1,5 +1,4 @@
-import { RouterProvider } from "react-router-dom";
-import router from "./router";
+import Router from "./router";
 import chakraUItheme from "./theme/index.chakra-ui";
 import { ChakraProvider } from "@chakra-ui/react";
 import Wrapper from "./container/Wrapper";
@@ -8,19 +7,22 @@ import "./App.css";
 import { store } from "./store";
 import { Provider } from "react-redux";
 import MessageListenerProvider from "./Providers/Message.Listener";
+import { BrowserRouter } from "react-router-dom";
 
 function App() {
   return (
-    <Provider store={store}>
-      <ChakraProvider theme={chakraUItheme}>
-        <BlockNativeContextProvider>
-          <MessageListenerProvider />
-          <Wrapper>
-            <RouterProvider router={router} />
-          </Wrapper>
-        </BlockNativeContextProvider>
-      </ChakraProvider>
-    </Provider>
+    <BrowserRouter>
+      <Provider store={store}>
+        <ChakraProvider theme={chakraUItheme}>
+          <BlockNativeContextProvider>
+            <MessageListenerProvider />
+            <Wrapper>
+              <Router />
+            </Wrapper>
+          </BlockNativeContextProvider>
+        </ChakraProvider>
+      </Provider>
+    </BrowserRouter>
   );
 }
 

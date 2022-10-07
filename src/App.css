@@ -42,7 +42,7 @@ button {
 }
 
 .card {
-  min-width: 500px;
+  width: 590px;
   /* width: 524px; */
   display: flex;
   justify-content: center;
@@ -51,7 +51,7 @@ button {
   flex-direction: column;
   box-shadow: 0 4px 15px 0 rgb(0 0 0 / 20%);
   border-radius: 4px;
-  height: 400px;
+  height: 430px;
 }
 
 .checkout {
@@ -63,7 +63,8 @@ button {
 }
 
 .checkout_nav {
-  min-width: 100px;
+  width: 149px;
+  min-width: 149px;
   border-radius: 4px 0 0 4px;
   border-right: 1px solid #eee;
   -webkit-box-shadow: inset -4px 0 6px rgb(0 0 0 / 2%);
@@ -75,6 +76,7 @@ button {
   -ms-flex: 1;
   flex: 1;
   padding: 20px;
+  width: 100%;
 }
 
 .nav {
@@ -269,4 +271,31 @@ img.icon {
   justify-content: space-between;
   padding: 5px 12px;
   align-items: center;
+}
+
+.flex-col {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 12px;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+}
+
+
+.grid-row {
+  display: grid;
+  grid-template-rows: 5;
+  grid-template-columns: 1;
+}
+
+.nft_item_selected {
+  border: 1px solid #59b0aa;
+  border-radius: 6px;
+  padding: 3px;
+  transition: border 1s linear;
+}
+
+img {
+  max-width: fit-content!important;
 }

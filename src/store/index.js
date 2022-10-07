@@ -11,6 +11,13 @@ export const store = configureStore({
     wallet: walletReducer,
     transaction: transactionReducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      // serializableCheck: {
+      //   ignoredActions: ['wallet/transferNFT/fulfilled','wallet/fetchNFTMeta/pending'], // contains keys that are of bigNumber data type.
+      // },
+      serializableCheck: false
+    }),
 });
 
 export const useAppDispatch = () => useDispatch();

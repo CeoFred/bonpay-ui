@@ -35,7 +35,7 @@ export default function Home() {
   useEffect(() => {
     if (timeLeft === 0) {
       window.clearInterval(countdownId);
-      closeBondPay(true,"script")
+      closeBondPay(true, "script");
     }
   }, [timeLeft]);
 
@@ -48,7 +48,6 @@ export default function Home() {
   }
 
   function initCountdown(transaction) {
-
     setCountdownId(
       setInterval(() => {
         setTimeLeft((P) => P - 1);
@@ -58,14 +57,14 @@ export default function Home() {
 
     postMessageToListeners({
       event: "pay.success",
-      data: transaction
+      data: transaction,
     });
   }
 
-  function closeBondPay(completed,action) {
+  function closeBondPay(completed, action) {
     postMessageToListeners({
       event: "pay.exit",
-      data: {completed,action}
+      data: { completed, action },
     });
   }
 
@@ -89,7 +88,7 @@ export default function Home() {
         String(transactionState.VALUE),
         transactionState.RECEPIENT
       );
-       await txn.wait(2);
+      await txn.wait(2);
 
       setTimeout(async () => {
         await dispatch(
@@ -101,9 +100,7 @@ export default function Home() {
         );
         initCountdown(txn);
       }, 1000);
-
     } catch (error) {
-
       await dispatch(
         transactionFailed({
           TYPE: "WALLET_TRANSFER",
@@ -111,7 +108,6 @@ export default function Home() {
           MESSAGE: "Something went wrong",
         })
       );
-
     }
   }
 
@@ -120,6 +116,27 @@ export default function Home() {
     return "Whoops! Something went wrong";
   }
 
+   if(transactionState.CONFIG_ERROR){
+    return <Alert
+        status="error"
+        variant="subtle"
+        flexDirection="column"
+        alignItems="center"
+        justifyContent="center"
+        textAlign="center"
+        height="auto"
+        borderRadius="6px"
+        pb="20px"
+      >
+        <AlertIcon boxSize="40px" mr={0} my="1rem" />
+        <AlertTitle mt={4} mb={1} fontSize="lg">
+          Attention
+        </AlertTitle>
+        <div>{transactionState.CONFIG_ERROR}</div>
+      
+      </Alert>
+  }
+  
   if (transactionState.ERROR_MESSAGE) {
     return (
       <Alert
@@ -145,7 +162,7 @@ export default function Home() {
             <Button
               colorScheme={"red"}
               variant="outline"
-              onClick={() => closeBondPay(false,"user")}
+              onClick={() => closeBondPay(false, "user")}
             >
               Close
             </Button>

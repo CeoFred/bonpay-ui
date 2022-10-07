@@ -1,4 +1,15 @@
 export const chainConfig = {
+  4: {
+    RPC_URLS: [
+      "https://rinkeby.infura.io/v3/",
+    ],
+    NETWORK_NAME: "Rinkeby test network",
+   
+    CURRENCY_SYMBOL: "RinkebyETH",
+    BLOCK_EXPLORER: ["https://rinkeby.etherscan.io/"],
+    DECIMALS: 18,
+      CHAIN_ID: "0x" + Number(4).toString(16),
+  },
   56: {
     RPC_URLS: [
       "https://speedy-nodes-nyc.moralis.io/f111f2bc63fb5a4b94e68c21/bsc/mainnet",
@@ -57,7 +68,7 @@ export const chainConfig = {
     BLOCK_EXPLORER: ["https://goerli.etherscan.io/"],
   },
   97: {
-     CHAIN_ID: "0x" + Number(97).toString(16),
+    CHAIN_ID: "0x" + Number(97).toString(16),
     RPC_URLS: ["https://data-seed-prebsc-1-s1.binance.org:8545/"],
     NETWORK_NAME: "BSC Testnet",
     CURRENCY_SYMBOL: "tBNB",
@@ -65,11 +76,13 @@ export const chainConfig = {
     BLOCK_EXPLORER: ["https://testnet.bscscan.com/"],
   },
   137: {
-     CHAIN_ID: "0x" + Number(137).toString(16),
-    RPC_URLS: ["https://polygon-mainnet.g.alchemy.com/v2/FDaxG4jpaYHddzfeC_4TMAH2EJoF5jLa/"],
+    CHAIN_ID: "0x" + Number(137).toString(16),
+    RPC_URLS: [
+      "https://polygon-mainnet.g.alchemy.com/v2/FDaxG4jpaYHddzfeC_4TMAH2EJoF5jLa/",
+    ],
     NETWORK_NAME: "Polygon Mainnet",
     CURRENCY_SYMBOL: "MATIC",
     DECIMALS: 18,
     BLOCK_EXPLORER: ["https://explorer.matic.network/"],
-  }
+  },
 };

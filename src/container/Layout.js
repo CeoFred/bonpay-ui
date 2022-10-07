@@ -1,11 +1,17 @@
 import React, { useState, useEffect } from "react";
-import { Icon } from '@chakra-ui/react'
-import { CloseIcon } from '@chakra-ui/icons'
-import { FaHeart } from 'react-icons/fa'
+import { Icon } from "@chakra-ui/react";
+import { CloseIcon } from "@chakra-ui/icons";
+import { Text } from "@chakra-ui/react";
+import { FaHeart } from "react-icons/fa";
+import { NavLink } from "react-router-dom";
 
 import Button from "../components/Button";
 import { useBlockNative } from "../Providers/Web3.provider";
-import { formatAddress, toEther, postMessageToListeners } from "../utils/helpers";
+import {
+  formatAddress,
+  toEther,
+  postMessageToListeners,
+} from "../utils/helpers";
 import { useSelector } from "react-redux";
 import { selectNetwork } from "../reducers/network/selector";
 import {
@@ -13,7 +19,9 @@ import {
   toggleConnectingWallet,
 } from "../reducers/wallet/walletSlice";
 import { useAppDispatch } from "../store";
-import {Text} from "@chakra-ui/react";
+import {  setUpNetworkConfig } from '../reducers/network/networkSlice'
+import { chainConfig } from "../config/chain";
+
 export default function Layout({ children }) {
   const networkState = useSelector(selectNetwork);
 
@@ -48,19 +56,24 @@ export default function Layout({ children }) {
     dispatch(toggleConnectingWallet());
     const ready = await readyToTransact();
     ready && (await connect(networkState.NETWORK_ID));
+    networkState.NETWORK_ID && dispatch(setUpNetworkConfig(chainConfig[networkState.NETWORK_ID]))
   }
 
-
-  async function closeBondPay(){
-     postMessageToListeners({
+  async function closeBondPay() {
+    postMessageToListeners({
       event: "pay.exit",
-      data: {completed:false,action:'user'}
+      data: { completed: false, action: "user" },
     });
   }
 
   return (
     <div className="container">
-      <CloseIcon cursor={"pointer"} color="#fff" mb="15px" onClick={closeBondPay}/>
+      <CloseIcon
+        cursor={"pointer"}
+        color="#fff"
+        mb="15px"
+        onClick={closeBondPay}
+      />
       <div className="card">
         <div className="checkout">
           <div className="checkout_nav">
@@ -75,19 +88,40 @@ export default function Layout({ children }) {
                 </div>
                 <ul className="nav_items">
                   <li>
-                    <a className="text-primary">Wallet</a>
+                    <NavLink
+                      to="/wallet"
+                      className={({ isActive }) =>
+                        isActive ? "text-primary" : undefined
+                      }
+                    >
+                      Wallet
+                    </NavLink>
                   </li>
                   <li>
-                    <a>NFT</a>
+                    <NavLink
+                      to="/nft"
+                      className={({ isActive }) =>
+                        isActive ? "text-primary" : undefined
+                      }
+                    >
+                      NFT
+                    </NavLink>
                   </li>
                   <li>
-                    <a>ERC20-Token</a>
+                    <NavLink
+                      to="token"
+                      className={({ isActive }) =>
+                        isActive ? "text-primary" : undefined
+                      }
+                    >
+                      ERC20-Token
+                    </NavLink>
                   </li>
                   <li>
-                    <a>Transfer</a>
+                    <NavLink>Transfer</NavLink>
                   </li>
                   <li>
-                    <a>Bridge</a>
+                    <NavLink>Bridge</NavLink>
                   </li>
                 </ul>
               </div>
@@ -125,7 +159,11 @@ export default function Layout({ children }) {
         </div>
       </div>
 
-      <Text my="10px" color="#fff">Made with <Icon color="red" as={FaHeart} /> by <a target="_blank" rel="noreferrer" href="https://twitter.com/codemon_">codemon_</a>
+      <Text my="10px" color="#fff">
+        Made with <Icon color="red" as={FaHeart} /> by{" "}
+        <a target="_blank" rel="noreferrer" href="https://twitter.com/codemon_">
+          codemon_
+        </a>
       </Text>
     </div>
   );
