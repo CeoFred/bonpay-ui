@@ -19,7 +19,7 @@ import {
   toggleConnectingWallet,
 } from "../reducers/wallet/walletSlice";
 import { useAppDispatch } from "../store";
-import {  setUpNetworkConfig } from '../reducers/network/networkSlice'
+import { setUpNetworkConfig } from "../reducers/network/networkSlice";
 import { chainConfig } from "../config/chain";
 
 export default function Layout({ children }) {
@@ -56,7 +56,13 @@ export default function Layout({ children }) {
     dispatch(toggleConnectingWallet());
     const ready = await readyToTransact();
     ready && (await connect(networkState.NETWORK_ID));
-    networkState.NETWORK_ID && dispatch(setUpNetworkConfig(chainConfig[networkState.NETWORK_ID]))
+    networkState.NETWORK_ID &&
+      dispatch(
+        setUpNetworkConfig({
+          ...chainConfig[networkState.NETWORK_ID],
+          NETWORK_ID: networkState.NETWORK_ID,
+        })
+      );
   }
 
   async function closeBondPay() {
@@ -109,12 +115,12 @@ export default function Layout({ children }) {
                   </li>
                   <li>
                     <NavLink
-                      to="token"
+                      to="/token"
                       className={({ isActive }) =>
                         isActive ? "text-primary" : undefined
                       }
                     >
-                      ERC20-Token
+                      Stable Token
                     </NavLink>
                   </li>
                   <li>

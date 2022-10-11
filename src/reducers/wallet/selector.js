@@ -5,7 +5,6 @@ export const selectWallet = createSelector(
   (wallet) => wallet
 );
 
-
 export const selectNFTs = createSelector(
   (state) => state.wallet.nfts,
   (nfts) => nfts

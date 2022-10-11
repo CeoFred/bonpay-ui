@@ -16,7 +16,7 @@ export const store = configureStore({
       // serializableCheck: {
       //   ignoredActions: ['wallet/transferNFT/fulfilled','wallet/fetchNFTMeta/pending'], // contains keys that are of bigNumber data type.
       // },
-      serializableCheck: false
+      serializableCheck: false,
     }),
 });
 
