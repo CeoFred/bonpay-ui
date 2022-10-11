@@ -90,6 +90,18 @@ export const stableCoinToAddress = {
       USDC: null,
       USDT: null,
       BUSD: null
-  }
+  },
+  97: {
+       DAI: null,
+      USDC: null,
+      USDT: null,
+      BUSD: null
+  },
+  42: {
+       DAI: null,
+      USDC: null,
+      USDT: null,
+      BUSD: null
+  },
 };
 
