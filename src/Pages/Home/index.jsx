@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
+
 import { selectNetwork } from "../../reducers/network/selector";
 import { selectTranction } from "../../reducers/transaction/selector";
 import {
@@ -26,7 +27,9 @@ export default function Home() {
 
   const networkState = useSelector(selectNetwork);
   const transactionState = useSelector(selectTranction);
-  const { transferNativeToken, connected } = useBlockNative();
+  const { VALUE } = transactionState;
+
+  const { transferNativeToken, connected, balance } = useBlockNative();
 
   const [timeLeft, setTimeLeft] = useState(10);
   const [countdownId, setCountdownId] = useState(null);
@@ -71,6 +74,11 @@ export default function Home() {
   async function handleWalletTransfer() {
     setError(null);
 
+    if(balance/10**18 < Number(VALUE)){
+      setError("Insufficient balance for transaction");
+      return;
+    }
+
     if (!connected) {
       setError("Wallet Not Connected");
       return;
@@ -111,13 +119,10 @@ export default function Home() {
     }
   }
 
-  function parseErrorMessage(error) {
-    console.log(error);
-    return "Whoops! Something went wrong";
-  }
 
-   if(transactionState.CONFIG_ERROR){
-    return <Alert
+  if (transactionState.CONFIG_ERROR) {
+    return (
+      <Alert
         status="error"
         variant="subtle"
         flexDirection="column"
@@ -133,10 +138,10 @@ export default function Home() {
           Attention
         </AlertTitle>
         <div>{transactionState.CONFIG_ERROR}</div>
-      
       </Alert>
+    );
   }
-  
+
   if (transactionState.ERROR_MESSAGE) {
     return (
       <Alert
@@ -208,6 +213,7 @@ export default function Home() {
       </Alert>
     );
   }
+
   return (
     <section className="payment-form">
       <div className="managedaccount">
@@ -257,15 +263,6 @@ export default function Home() {
           </div>
         </div>
 
-        <div>
-          {error ? (
-            <Text fontSize="10px" color="tomato">
-              {error}
-            </Text>
-          ) : (
-            ""
-          )}
-        </div>
       </div>
 
       <Button
@@ -279,6 +276,7 @@ export default function Home() {
       >
         Proceed
       </Button>
+       {error && <Text color="red" mt="5px" fontWeight={"600"} fontSize={"0.7rem"}>NOTICE: {error}</Text>}
     </section>
   );
 }

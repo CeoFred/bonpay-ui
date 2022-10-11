@@ -1,5 +1,8 @@
 import { ethers } from "ethers";
-export { fetchNfts } from './moralis.api'
+export { fetchNfts, fetchTokenPrice } from "./moralis.api";
+import { stableCoinToAddress } from './constants'
+import axios from "axios";
+import BigNumber from "bignumber.js";
 
 export const formatAddress = (address) => {
   return address.slice(0, 9) + "..." + address.slice(address.length - 4);
@@ -16,6 +19,10 @@ export const handleBigNumberFormat = (wei) => {
 export const toEther = (wei, decimals) => {
   return ethers.utils.formatUnits(wei, decimals);
 };
+
+export const weiToEther = (ether, decimals) => {
+  return ethers.utils.parseUnits(BigNumber(ether).toString(),decimals)
+}
 
 export const roundTo = (n, digits) => {
   var negative = false;
@@ -34,3 +41,16 @@ export const roundTo = (n, digits) => {
   }
   return n;
 };
+
+export const fetchCoinPrice = async (coin) => {
+  const response = await axios.get(
+    `https://api.coingecko.com/api/v3/coins/${coin}`
+  );
+  const price = response.data.market_data.current_price.usd;
+  return price;
+};
+
+export const isValidToken = (network,token) => {
+    if(stableCoinToAddress[network]?.[token]) return true;
+    return false;
+}

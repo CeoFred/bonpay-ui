@@ -5,19 +5,21 @@ import { Spinner, Text } from "@chakra-ui/react";
 import { useAppDispatch } from "../../store";
 import { useBlockNative } from "../../Providers/Web3.provider";
 import {
-  fetchNfts,
   formatAddress,
   postMessageToListeners,
+  weiToEther
 } from "../../utils/helpers";
+import { stableCoinToAddress, tokenMeta } from "../../utils/constants";
 import { selectNetwork } from "../../reducers/network/selector";
 import { selectWallet } from "../../reducers/wallet/selector";
-import { fetchNFTMeta } from "../../reducers/wallet/walletSlice";
 import {
-  transferNFT,
-  resetNFTTransactionState,
+  transferToken,
+  resetTokenTransactionState,
+  fetchTokenBalance,
+  fetchUSDPriceOfNativeToken,
 } from "../../reducers/transaction/transactionSlice";
 import {
-  selectNFTTranction,
+  selectTokenTransaction,
   selectTranction,
 } from "../../reducers/transaction/selector";
 import {
@@ -29,21 +31,31 @@ import {
   Stack,
   Box,
 } from "@chakra-ui/react";
+import { chainConfig } from "../../config/chain";
 
-export default function NFT() {
+export default function Tokens() {
   const { connected, provider } = useBlockNative();
+
   const networkState = useSelector(selectNetwork);
   const walletState = useSelector(selectWallet);
-  const nftTransactionState = useSelector(selectNFTTranction);
+  const tokenTransactionState = useSelector(selectTokenTransaction);
   const transactionState = useSelector(selectTranction);
-
   const dispatch = useAppDispatch();
 
+  const { NETWORK_ID,CURRENCY_SYMBOL } = networkState;
+  const { address } = walletState;
+  const { ACCEPTING_TOKENS, TOKENS_PAYMENT_CONFIG,COIN_PRICE_USD,VALUE } = transactionState;
+
+
   const [loading, setLoading] = useState(true);
-  const [selectedNFT, setSelectedNFT] = useState(null);
-  const [nfts, setNFTData] = useState([]);
+  const [selectedToken, setSelectedToken] = useState(null);
+  const [tokens, setTokenData] = useState([]);
   const [timeLeft, setTimeLeft] = useState(15);
   const [countdownId, setCountdownId] = useState(null);
+  const [error, setError] = useState(null);
+  
+
+
 
   useEffect(() => {
     if (timeLeft === 0) {
@@ -53,53 +65,77 @@ export default function NFT() {
   }, [timeLeft]);
 
   useEffect(() => {
-    const { CHAIN_ID } = networkState;
-    const { address } = walletState;
-    const { ACCETPING_NFT, NFT_PAYMENT_CONFIG } = transactionState;
 
-    if (connected && CHAIN_ID && address && loading && ACCETPING_NFT) {
-      init(CHAIN_ID, address, NFT_PAYMENT_CONFIG);
+    if (connected && NETWORK_ID && address && loading && ACCEPTING_TOKENS) {
+      init(NETWORK_ID, address, TOKENS_PAYMENT_CONFIG.CONFIG);
     }
+
   }, [connected, networkState, walletState, loading, transactionState]);
 
-  async function init(CHAIN_ID, address, NFT_PAYMENT_CONFIG) {
-    const { collection } = NFT_PAYMENT_CONFIG;
-    const { data } = await fetchNfts(
-      CHAIN_ID,
-      address,
-      process.env.REACT_APP_MORALIS_API_KEY,
-      collection
-    );
 
-    const result = await dispatch(
-      fetchNFTMeta({ NFTs: data.result, provider })
-    );
 
-    if (fetchNFTMeta.fulfilled.match(result)) {
-      await setNFTData(result.payload);
-      setLoading(false);
-    }
+  async function init(NETWORK_ID, address, TOKENS_PAYMENT_CONFIG) {
+    // fetch native coin price in USD
+    await dispatch(fetchUSDPriceOfNativeToken(chainConfig[NETWORK_ID].ID));
+   
+    // get balance of erc20 tokens for user address
+    const fetchBalance = TOKENS_PAYMENT_CONFIG.map(async (token) => {
+      const tokenAddress = stableCoinToAddress[NETWORK_ID][token];
+      const fetchAction = await dispatch(
+        fetchTokenBalance({ tokenAddress, userAddress: address, provider })
+      );
+      return { ...fetchAction.payload, token, ...tokenMeta[token],tokenAddress };
+    });
+
+    const tokenInfo = await Promise.all(fetchBalance);
+    await setTokenData(tokenInfo);
+    setLoading(false);
   }
 
-  async function handleNFTSelected(NFT) {
-    setSelectedNFT(NFT);
+
+
+  function getTokenBalance(token){
+    return tokens.filter(t => t.token === token)[0].balance;
   }
 
-  function isNFTSelected(NFT) {
-    if (selectedNFT && selectedNFT.collection_id === NFT.collection_id) {
+  async function handleTokenSelected(token) {
+    setSelectedToken(token);
+  }
+
+  function isTokenSelected(token) {
+    if (selectedToken && selectedToken.token === token) {
       return "nft_item_selected";
     } else {
       return "nft_item";
     }
   }
 
-  async function handleNFTTransfer() {
-    if (selectedNFT && !nftTransactionState.PENDING) {
+  function tokenHasValidBalance(expected, actual){
+    if(actual > expected) return "#59b0aa";
+    return "red";
+  }
+
+  async function handlePayment() {
+    await setError(null);
+    
+    if((COIN_PRICE_USD*Number(VALUE)) > selectedToken.balance){
+        await setError("Insufficient Balance");
+        return;
+    }
+
+    if (selectedToken && !tokenTransactionState.PENDING) {
+
+      const amount = weiToEther(Number(COIN_PRICE_USD*Number(VALUE)).toFixed(1),selectedToken.decimals);
+
       const transferAction = await dispatch(
-        transferNFT({ nft: selectedNFT, provider: provider.getSigner() })
+        transferToken({ amount,tokenAddress: selectedToken.tokenAddress, provider: provider.getSigner() })
       );
-      console.log(transferAction);
       if (!transferAction?.error) {
+         await postMessageToListeners({
+         event: "pay.success",
+         data: {value: transferAction.payload.value, hash: transferAction.payload.hash, gasPrice: transferAction.payload.gasPrice
+        },
+        });
         await setCountdownId(
           setInterval(() => {
             setTimeLeft((P) => P - 1);
@@ -110,15 +146,16 @@ export default function NFT() {
   }
 
   function tryAgain() {
-    dispatch(resetNFTTransactionState());
+    dispatch(resetTokenTransactionState());
   }
 
   function getTransactionExplorer(hash) {
     return `${networkState.BLOCK_EXPLORER[0]}tx/${hash}`;
   }
 
-  function closeBondPay(completed, action) {
-    postMessageToListeners({
+  async function closeBondPay(completed, action) {
+    
+   await postMessageToListeners({
       event: "pay.exit",
       data: { completed, action },
     });
@@ -131,7 +168,7 @@ export default function NFT() {
       </section>
     );
   }
-  if (!transactionState.ACCETPING_NFT) {
+  if (!transactionState.ACCEPTING_TOKENS) {
     return (
       <Alert
         status="info"
@@ -157,7 +194,7 @@ export default function NFT() {
     return (
       <section className="flex-col">
         <Spinner />
-        <Text fontSize={"small"}>Fetching NFTs</Text>
+        <Text fontSize={"small"}>Fetching Your token Info..</Text>
       </section>
     );
   }
@@ -184,7 +221,7 @@ export default function NFT() {
     );
   }
 
-  if (nftTransactionState.ERROR) {
+  if (tokenTransactionState.ERROR) {
     return (
       <Alert
         status="error"
@@ -198,9 +235,9 @@ export default function NFT() {
       >
         <AlertIcon boxSize="40px" mr={0} my="1rem" />
         <AlertTitle mt={4} mb={1} fontSize="lg">
-          Failed to Transfer NFT!
+          Failed to Transfer {selectedToken.name}!
         </AlertTitle>
-        <div>{nftTransactionState.ERROR}</div>
+        <div>{tokenTransactionState.ERROR}</div>
         <AlertDescription my="10px" fontSize={"0.7rem"} fontWeight="bold">
           <Stack direction="row" spacing={4}>
             <Button colorScheme={"red"} onClick={tryAgain}>
@@ -219,7 +256,7 @@ export default function NFT() {
     );
   }
 
-  if (nftTransactionState.COMPLETED && selectedNFT && transactionState) {
+  if (tokenTransactionState.COMPLETED && selectedToken && transactionState) {
     return (
       <Alert
         status="success"
@@ -237,13 +274,13 @@ export default function NFT() {
           It&apos;s Gone!
         </AlertTitle>
         <AlertDescription maxWidth="sm" mt="1rem" mb="1.5rem">
-          You just transfered {selectedNFT.name} to{" "}
+          You just transfered {selectedToken.name} to{" "}
           {formatAddress(transactionState.RECEPIENT)}. View transfer{" "}
           <a
             style={{ color: "blue" }}
             target="_blank"
             rel="noreferrer"
-            href={getTransactionExplorer(nftTransactionState.TRANSACTION.hash)}
+            href={getTransactionExplorer(tokenTransactionState.TRANSACTION.hash)}
           >
             here.
           </a>
@@ -256,46 +293,64 @@ export default function NFT() {
     );
   }
 
-  if (nfts.length === 0 && !loading) {
-    return <section className="flex-col">Whoops! No NFTs were found.</section>;
+  if (tokens.length === 0 && !loading) {
+    return <section className="flex-col">Whoops! No Data available.</section>;
   }
+
   return (
     <Box className="flex-col" h="100%" w="100%">
-      <div>Select One To Transfer</div>
+      <Text fontWeight={"bold"} mb="5px">
+        {VALUE} {CURRENCY_SYMBOL} ~ USD {COIN_PRICE_USD * VALUE}
+      </Text>
+      {/* <div>Select One To Proceed</div> */}
 
-      <Box className="flex-row" maxW="340px" overflowX={"auto"}>
-        {nfts.map((NFT) => {
+      <Box display="grid" maxW="340px" mb="15px" w="100%" overflowX={"auto"}>
+        {tokens.map((token) => {
           return (
             <Box
-              onClick={() => handleNFTSelected(NFT)}
-              className={`${isNFTSelected(NFT)}`}
+              onClick={() => handleTokenSelected(token)}
+              className={`${isTokenSelected(token.token)}`}
               cursor="pointer"
-              mx="5px"
+              my="5px"
               textAlign={"center"}
-              key={NFT.collection_id}
-              height="11rem"
+              key={token.token}
+              height="auto"
+              display="flex"
+              w="100%"
+              borderBottom={"1px solid #e2e8f0"}
+              justifyContent={"start"} alignItems="center"
             >
               <img
-                style={{ width: "135px", height: "135px" }}
-                src={NFT.image}
+                style={{ width: "25px", height: "25px" }}
+                src={token.image}
               />
-              <Text fontSize={"0.7rem"}>{NFT.name}</Text>
+
+              <Box ml="5px" flexDirection={"column"} display="flex" justifyContent={"center"} alignItems="start">
+              <Text>{token.name}</Text>
+              <Box>
+               <Text mb="4px" fontSize={"0.7rem"}>Balance: <span style={{color:tokenHasValidBalance(COIN_PRICE_USD * VALUE,getTokenBalance(token.token))}}>{getTokenBalance(token.token) || 0} USD</span></Text>
+              </Box>
+              </Box>
+
             </Box>
           );
         })}
       </Box>
 
+       
       <Button
-        isLoading={nftTransactionState.PENDING}
-        loadingText="Transfering.."
+        isLoading={tokenTransactionState.PENDING}
+        loadingText="Processing.."
         colorScheme="teal"
         variant="outline"
         w="100%"
-        onClick={handleNFTTransfer}
-        disabled={!selectedNFT || nftTransactionState.PENDING}
+        onClick={handlePayment}
+        disabled={!selectedToken?.balance || tokenTransactionState.PENDING}
       >
-        Proceed
+        {!selectedToken?.balance ? 'Select One To Proceed' : 'Proceed'}
       </Button>
+       {tokenTransactionState.PENDING && <Text color="#59b0aa" mt="5px" fontWeight={"600"} fontSize={"0.7rem"}>NOTICE: Plase do not close this modal.</Text>}
+       {error && <Text color="red" mt="5px" fontWeight={"600"} fontSize={"0.7rem"}>NOTICE: {error}</Text>}
     </Box>
   );
 }

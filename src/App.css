@@ -3,7 +3,7 @@
 * {
   font-family: "Open Sans", sans-serif;
   font-weight: 500;
-  transition: all 0.7s ease;
+  transition: all 0.3s ease;
 }
 
 body {
@@ -51,7 +51,7 @@ button {
   flex-direction: column;
   box-shadow: 0 4px 15px 0 rgb(0 0 0 / 20%);
   border-radius: 4px;
-  height: 430px;
+  min-height: 430px;
 }
 
 .checkout {
@@ -282,7 +282,6 @@ img.icon {
   width: 100%;
 }
 
-
 .grid-row {
   display: grid;
   grid-template-rows: 5;
@@ -293,9 +292,9 @@ img.icon {
   border: 1px solid #59b0aa;
   border-radius: 6px;
   padding: 3px;
-  transition: border 1s linear;
+  transition: border 0.5s linear;
 }
 
 img {
-  max-width: fit-content!important;
+  max-width: fit-content !important;
 }
