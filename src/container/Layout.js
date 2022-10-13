@@ -4,7 +4,7 @@ import { CloseIcon } from "@chakra-ui/icons";
 import { Text } from "@chakra-ui/react";
 import { FaHeart } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
-
+import NigeriaFlag from '../assets/icons/nigeria.png'
 import Button from "../components/Button";
 import { useBlockNative } from "../Providers/Web3.provider";
 import {
@@ -124,7 +124,14 @@ export default function Layout({ children }) {
                     </NavLink>
                   </li>
                   <li>
-                    <NavLink>Transfer</NavLink>
+                    <NavLink
+                      to="/transfer"
+                      className={({ isActive }) =>
+                        isActive ? "text-primary" : undefined
+                      }
+                    >
+                      Transfer
+                    </NavLink>
                   </li>
                   <li>
                     <NavLink>Bridge</NavLink>
@@ -165,10 +172,10 @@ export default function Layout({ children }) {
         </div>
       </div>
 
-      <Text my="10px" color="#fff">
-        Made with <Icon color="red" as={FaHeart} /> by{" "}
+      <Text my="10px" color="#fff" display="flex" alignItems={"center"}>
+       Proudly made in <img className="nigeria_icon" alt="Nigeria Flag" src={NigeriaFlag} />{" "}
         <a target="_blank" rel="noreferrer" href="https://twitter.com/codemon_">
-          codemon_
+          by codemon_
         </a>
       </Text>
     </div>

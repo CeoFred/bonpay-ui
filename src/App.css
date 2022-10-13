@@ -298,3 +298,17 @@ img.icon {
 img {
   max-width: fit-content !important;
 }
+
+.t-assets {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  justify-content: space-between;
+  place-items: start;
+}
+
+
+.nigeria_icon {
+  height: 15px;
+  display:inline;
+  margin:0px 5px;
+}

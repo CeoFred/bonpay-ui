@@ -7,7 +7,7 @@ import { useBlockNative } from "../../Providers/Web3.provider";
 import {
   formatAddress,
   postMessageToListeners,
-  weiToEther
+  weiToEther,
 } from "../../utils/helpers";
 import { stableCoinToAddress, tokenMeta } from "../../utils/constants";
 import { selectNetwork } from "../../reducers/network/selector";
@@ -42,10 +42,10 @@ export default function Tokens() {
   const transactionState = useSelector(selectTranction);
   const dispatch = useAppDispatch();
 
-  const { NETWORK_ID,CURRENCY_SYMBOL } = networkState;
+  const { NETWORK_ID, CURRENCY_SYMBOL } = networkState;
   const { address } = walletState;
-  const { ACCEPTING_TOKENS, TOKENS_PAYMENT_CONFIG,COIN_PRICE_USD,VALUE } = transactionState;
-
+  const { ACCEPTING_TOKENS, TOKENS_PAYMENT_CONFIG, COIN_PRICE_USD, VALUE } =
+    transactionState;
 
   const [loading, setLoading] = useState(true);
   const [selectedToken, setSelectedToken] = useState(null);
@@ -53,9 +53,6 @@ export default function Tokens() {
   const [timeLeft, setTimeLeft] = useState(15);
   const [countdownId, setCountdownId] = useState(null);
   const [error, setError] = useState(null);
-  
-
-
 
   useEffect(() => {
     if (timeLeft === 0) {
@@ -65,26 +62,27 @@ export default function Tokens() {
   }, [timeLeft]);
 
   useEffect(() => {
-
     if (connected && NETWORK_ID && address && loading && ACCEPTING_TOKENS) {
       init(NETWORK_ID, address, TOKENS_PAYMENT_CONFIG.CONFIG);
     }
-
   }, [connected, networkState, walletState, loading, transactionState]);
-
-
 
   async function init(NETWORK_ID, address, TOKENS_PAYMENT_CONFIG) {
     // fetch native coin price in USD
     await dispatch(fetchUSDPriceOfNativeToken(chainConfig[NETWORK_ID].ID));
-   
+
     // get balance of erc20 tokens for user address
     const fetchBalance = TOKENS_PAYMENT_CONFIG.map(async (token) => {
       const tokenAddress = stableCoinToAddress[NETWORK_ID][token];
       const fetchAction = await dispatch(
         fetchTokenBalance({ tokenAddress, userAddress: address, provider })
       );
-      return { ...fetchAction.payload, token, ...tokenMeta[token],tokenAddress };
+      return {
+        ...fetchAction.payload,
+        token,
+        ...tokenMeta[token],
+        tokenAddress,
+      };
     });
 
     const tokenInfo = await Promise.all(fetchBalance);
@@ -92,10 +90,8 @@ export default function Tokens() {
     setLoading(false);
   }
 
-
-
-  function getTokenBalance(token){
-    return tokens.filter(t => t.token === token)[0].balance;
+  function getTokenBalance(token) {
+    return tokens.filter((t) => t.token === token)[0].balance;
   }
 
   async function handleTokenSelected(token) {
@@ -110,31 +106,40 @@ export default function Tokens() {
     }
   }
 
-  function tokenHasValidBalance(expected, actual){
-    if(actual > expected) return "#59b0aa";
+  function tokenHasValidBalance(expected, actual) {
+    if (actual > expected) return "#59b0aa";
     return "red";
   }
 
   async function handlePayment() {
     await setError(null);
-    
-    if((COIN_PRICE_USD*Number(VALUE)) > selectedToken.balance){
-        await setError("Insufficient Balance");
-        return;
+
+    if (COIN_PRICE_USD * Number(VALUE) > selectedToken.balance) {
+      await setError("Insufficient Balance");
+      return;
     }
 
     if (selectedToken && !tokenTransactionState.PENDING) {
-
-      const amount = weiToEther(Number(COIN_PRICE_USD*Number(VALUE)).toFixed(1),selectedToken.decimals);
+      const amount = weiToEther(
+        Number(COIN_PRICE_USD * Number(VALUE)).toFixed(1),
+        selectedToken.decimals
+      );
 
       const transferAction = await dispatch(
-        transferToken({ amount,tokenAddress: selectedToken.tokenAddress, provider: provider.getSigner() })
+        transferToken({
+          amount,
+          tokenAddress: selectedToken.tokenAddress,
+          provider: provider.getSigner(),
+        })
       );
       if (!transferAction?.error) {
-         await postMessageToListeners({
-         event: "pay.success",
-         data: {value: transferAction.payload.value, hash: transferAction.payload.hash, gasPrice: transferAction.payload.gasPrice
-        },
+        await postMessageToListeners({
+          event: "pay.success",
+          data: {
+            value: transferAction.payload.value,
+            hash: transferAction.payload.hash,
+            gasPrice: transferAction.payload.gasPrice,
+          },
         });
         await setCountdownId(
           setInterval(() => {
@@ -154,8 +159,7 @@ export default function Tokens() {
   }
 
   async function closeBondPay(completed, action) {
-    
-   await postMessageToListeners({
+    await postMessageToListeners({
       event: "pay.exit",
       data: { completed, action },
     });
@@ -163,9 +167,10 @@ export default function Tokens() {
 
   if (!connected) {
     return (
-      <section className="flex-col">
-        <Text fontSize={"large"}>No Wallet Conncted</Text>
-      </section>
+      <Alert fontSize="small" status="info">
+        <AlertIcon />
+        Please connect your wallet.
+      </Alert>
     );
   }
   if (!transactionState.ACCEPTING_TOKENS) {
@@ -280,7 +285,9 @@ export default function Tokens() {
             style={{ color: "blue" }}
             target="_blank"
             rel="noreferrer"
-            href={getTransactionExplorer(tokenTransactionState.TRANSACTION.hash)}
+            href={getTransactionExplorer(
+              tokenTransactionState.TRANSACTION.hash
+            )}
           >
             here.
           </a>
@@ -318,26 +325,43 @@ export default function Tokens() {
               display="flex"
               w="100%"
               borderBottom={"1px solid #e2e8f0"}
-              justifyContent={"start"} alignItems="center"
+              justifyContent={"start"}
+              alignItems="center"
             >
               <img
                 style={{ width: "25px", height: "25px" }}
                 src={token.image}
               />
 
-              <Box ml="5px" flexDirection={"column"} display="flex" justifyContent={"center"} alignItems="start">
-              <Text>{token.name}</Text>
-              <Box>
-               <Text mb="4px" fontSize={"0.7rem"}>Balance: <span style={{color:tokenHasValidBalance(COIN_PRICE_USD * VALUE,getTokenBalance(token.token))}}>{getTokenBalance(token.token) || 0} USD</span></Text>
+              <Box
+                ml="5px"
+                flexDirection={"column"}
+                display="flex"
+                justifyContent={"center"}
+                alignItems="start"
+              >
+                <Text>{token.name}</Text>
+                <Box>
+                  <Text mb="4px" fontSize={"0.7rem"}>
+                    Balance:{" "}
+                    <span
+                      style={{
+                        color: tokenHasValidBalance(
+                          COIN_PRICE_USD * VALUE,
+                          getTokenBalance(token.token)
+                        ),
+                      }}
+                    >
+                      {getTokenBalance(token.token) || 0} USD
+                    </span>
+                  </Text>
+                </Box>
               </Box>
-              </Box>
-
             </Box>
           );
         })}
       </Box>
 
-       
       <Button
         isLoading={tokenTransactionState.PENDING}
         loadingText="Processing.."
@@ -347,10 +371,18 @@ export default function Tokens() {
         onClick={handlePayment}
         disabled={!selectedToken?.balance || tokenTransactionState.PENDING}
       >
-        {!selectedToken?.balance ? 'Select One To Proceed' : 'Proceed'}
+        {!selectedToken?.balance ? "Select One To Proceed" : "Proceed"}
       </Button>
-       {tokenTransactionState.PENDING && <Text color="#59b0aa" mt="5px" fontWeight={"600"} fontSize={"0.7rem"}>NOTICE: Plase do not close this modal.</Text>}
-       {error && <Text color="red" mt="5px" fontWeight={"600"} fontSize={"0.7rem"}>NOTICE: {error}</Text>}
+      {tokenTransactionState.PENDING && (
+        <Text color="#59b0aa" mt="5px" fontWeight={"600"} fontSize={"0.7rem"}>
+          NOTICE: Plase do not close this modal.
+        </Text>
+      )}
+      {error && (
+        <Text color="red" mt="5px" fontWeight={"600"} fontSize={"0.7rem"}>
+          NOTICE: {error}
+        </Text>
+      )}
     </Box>
   );
 }

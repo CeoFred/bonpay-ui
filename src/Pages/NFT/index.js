@@ -124,11 +124,12 @@ export default function NFT() {
     });
   }
 
-  if (!connected) {
+ if (!connected) {
     return (
-      <section className="flex-col">
-        <Text fontSize={"large"}>No Wallet Conncted</Text>
-      </section>
+      <Alert fontSize="small" status="info">
+        <AlertIcon />
+        Please connect your wallet.
+      </Alert>
     );
   }
   if (!transactionState.ACCETPING_NFT) {

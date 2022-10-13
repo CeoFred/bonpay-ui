@@ -3,7 +3,7 @@ import {
   ERC721ContractFactory,
   ERC20ContractFactory,
 } from "../../utils/contract";
-import { fetchCoinPrice ,toEther, isValidToken} from "../../utils/helpers";
+import { fetchCoinPrice, toEther, isValidToken } from "../../utils/helpers";
 
 const initialState = {
   TYPE: "",
@@ -17,12 +17,13 @@ const initialState = {
   CONFIG_ERROR: null,
   ACCEPTING_TOKENS: null,
   TOKENS_PAYMENT_CONFIG: {},
-  COIN_PRICE_USD:null
+  COIN_PRICE_USD: null,
+  ACCEPTING_TRANSFER:false
 };
 
 /**
  * Transfer Stable Coin Thunk
- * 
+ *
  */
 export const transferToken = createAsyncThunk(
   "transaction/transferToken",
@@ -30,15 +31,9 @@ export const transferToken = createAsyncThunk(
     try {
       const { RECEPIENT } = getState().transaction;
 
-      const { tokenAddress, provider,amount } = data;
-      const tokenContract = await ERC20ContractFactory(
-        tokenAddress,
-        provider
-      );
-      const txn = await tokenContract.transfer(
-        RECEPIENT,
-        amount
-      );
+      const { tokenAddress, provider, amount } = data;
+      const tokenContract = await ERC20ContractFactory(tokenAddress, provider);
+      const txn = await tokenContract.transfer(RECEPIENT, amount);
       await txn.wait(1);
       return txn;
     } catch (error) {
@@ -79,7 +74,7 @@ export const fetchTokenBalance = createAsyncThunk(
     const balance = await erc20Contract.balanceOf(userAddress);
     const decimals = await erc20Contract.decimals();
 
-    return { balance: toEther(balance.toString(),decimals), decimals };
+    return { balance: toEther(balance.toString(), decimals), decimals };
   }
 );
 
@@ -103,12 +98,12 @@ function validateConfig(payload) {
       return "Dev: Tokens option set but no value specified.";
     }
     let invalidToken = null;
-    payload.TOKENS.forEach(token => {
-      if(!isValidToken(payload.NETWORK,String(token).toUpperCase())){
-          invalidToken = `Dev: Invalid/Unsupported token identifier "${token}"`;
+    payload.TOKENS.forEach((token) => {
+      if (!isValidToken(payload.NETWORK, String(token).toUpperCase())) {
+        invalidToken = `Dev: Invalid/Unsupported token identifier "${token}"`;
       }
     });
-    if(invalidToken){
+    if (invalidToken) {
       return invalidToken;
     }
   }
@@ -137,7 +132,9 @@ export const transactionSlice = createSlice({
       state.ACCETPING_NFT = action.payload?.NFT_CONFIG ? true : false;
       state.ACCEPTING_TOKENS = action.payload?.TOKENS ? true : false;
       state.TOKENS_PAYMENT_CONFIG.CONFIG = action.payload?.TOKENS;
+      state.ACCEPTING_TRANSFER = action.payload?.TRANSFER ? true : false;
       state.CONFIG_ERROR = validateConfig(action.payload);
+
     },
     initTransction: (state, action) => {
       state.TYPE = action.payload.TYPE;
@@ -165,9 +162,9 @@ export const transactionSlice = createSlice({
       state.TOKENS_PAYMENT_CONFIG = {
         CONFIG: state.TOKENS_PAYMENT_CONFIG?.CONFIG,
         ERROR: null,
-        PENDING: false
+        PENDING: false,
       };
-    }
+    },
   },
   extraReducers: function (builder) {
     builder.addCase(transferToken.rejected, (state, action) => {
@@ -175,8 +172,8 @@ export const transactionSlice = createSlice({
       state.TOKENS_PAYMENT_CONFIG.ERROR = action.payload;
       state.TOKENS_PAYMENT_CONFIG.COMPLETED = false;
       state.TOKENS_PAYMENT_CONFIG.PENDING = false;
-    })
-     builder.addCase(transferToken.fulfilled, (state, action) => {
+    });
+    builder.addCase(transferToken.fulfilled, (state, action) => {
       state.TRANSACTION = null;
       state.TOKENS_PAYMENT_CONFIG.COMPLETED = true;
       state.TOKENS_PAYMENT_CONFIG.PENDING = false;
@@ -210,7 +207,7 @@ export const transactionSlice = createSlice({
     });
     builder.addCase(fetchUSDPriceOfNativeToken.fulfilled, (state, action) => {
       state.COIN_PRICE_USD = action.payload;
-    })
+    });
   },
 });
 
@@ -220,7 +217,7 @@ export const {
   initTransction,
   transactionFailed,
   resetNFTTransactionState,
-  resetTokenTransactionState
+  resetTokenTransactionState,
 } = transactionSlice.actions;
 
 export default transactionSlice.reducer;

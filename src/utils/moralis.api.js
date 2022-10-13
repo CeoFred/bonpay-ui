@@ -24,3 +24,36 @@ export const fetchTokenPrice = async (chainId, apiKey, token_addresses) => {
   const response = await axios.request(options);
   return response;
 };
+
+export const getLatestTransactions = async (
+  chainId,
+  apiKey,
+  address,
+  block
+) => {
+  const options = {
+    method: "GET",
+    url: `https://deep-index.moralis.io/api/v2/${address}`,
+    params: { chain: chainId, from_block: block },
+    headers: { accept: "application/json", "X-API-Key": apiKey },
+  };
+
+  const response = await axios.request(options);
+  return response;
+};
+
+export const getLatestTokenTransactions = async (
+  chainId,
+  apiKey,
+  address,
+  block
+) => {
+  const options = {
+    method: "GET",
+    url: `https://deep-index.moralis.io/api/v2/${address}/erc20/transfers`,
+    params: { chain: chainId, from_block: block },
+    headers: { accept: "application/json", "X-API-Key": apiKey },
+  };
+  const response = await axios.request(options);
+  return response;
+};

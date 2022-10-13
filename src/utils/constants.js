@@ -1,7 +1,7 @@
-import DAILogo from "../assets/icons/tokens/DAI.webp";
-import USDTLogo from "../assets/icons/tokens/USDT.webp";
-import USDCLogo from "../assets/icons/tokens/USDC.webp";
-import BUSDLogo from "../assets/icons/tokens/BUSD.webp";
+import DAILogo from "../assets/icons/tokens/DAI.png";
+import USDTLogo from "../assets/icons/tokens/USDT.png";
+import USDCLogo from "../assets/icons/tokens/USDC.png";
+import BUSDLogo from "../assets/icons/tokens/BUSD.png";
 
 export const mapChainToAlchemyNetworkId = {
   1: "eth-mainnet",
@@ -18,6 +18,13 @@ export const mapChainToAlchemyNetworkId = {
   137: "polygon-mainnet",
   80001: "polygon-mumbai",
   ASTAR_MAINNET: "astar-mainnet",
+};
+
+export const networkTokenType = {
+  1: "ERC20",
+  137: "ERC20",
+  56: "BEP20",
+  5: "ERC20",
 };
 
 export const tokenMeta = {
@@ -75,33 +82,32 @@ export const stableCoinToAddress = {
     BUSD: "0x4fabb145d64652a948d72533023f6e7a623c7c53",
   },
   137: {
-      DAI: "0x8f3cf7ad23cd3cadbd9735aff958023239c6a063",
-      USDC: "0x2791bca1f2de4661ed88a30c99a7a9449aa84174",
-      USDT: "0xc2132d05d31c914a87c6611c10748aeb04b58e8f",
-      BUSD: "0x3BA4c387f786bFEE076A58914F5Bd38d668B42c3"
+    DAI: "0x8f3cf7ad23cd3cadbd9735aff958023239c6a063",
+    USDC: "0x2791bca1f2de4661ed88a30c99a7a9449aa84174",
+    USDT: "0xc2132d05d31c914a87c6611c10748aeb04b58e8f",
+    BUSD: "0x3BA4c387f786bFEE076A58914F5Bd38d668B42c3",
   },
   56: {
-      DAI: "0x1af3f329e8be154074d8769d1ffa4ee058b1dbc3",
-      USDC: "0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d",
-      BUSD: "0xe9e7cea3dedca5984780bafc599bd69add087d56"
+    DAI: "0x1af3f329e8be154074d8769d1ffa4ee058b1dbc3",
+    USDC: "0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d",
+    BUSD: "0xe9e7cea3dedca5984780bafc599bd69add087d56",
   },
   39797: {
-      DAI: null,
-      USDC: null,
-      USDT: null,
-      BUSD: null
+    DAI: null,
+    USDC: null,
+    USDT: null,
+    BUSD: null,
   },
   97: {
-       DAI: null,
-      USDC: null,
-      USDT: null,
-      BUSD: null
+    DAI: null,
+    USDC: null,
+    USDT: null,
+    BUSD: null,
   },
   42: {
-       DAI: null,
-      USDC: null,
-      USDT: null,
-      BUSD: null
+    DAI: null,
+    USDC: null,
+    USDT: null,
+    BUSD: null,
   },
 };
-
