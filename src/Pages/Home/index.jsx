@@ -74,7 +74,7 @@ export default function Home() {
   async function handleWalletTransfer() {
     setError(null);
 
-    if(balance/10**18 < Number(VALUE)){
+    if (balance / 10 ** 18 < Number(VALUE)) {
       setError("Insufficient balance for transaction");
       return;
     }
@@ -118,7 +118,6 @@ export default function Home() {
       );
     }
   }
-
 
   if (transactionState.CONFIG_ERROR) {
     return (
@@ -262,7 +261,6 @@ export default function Home() {
             </div>
           </div>
         </div>
-
       </div>
 
       <Button
@@ -276,7 +274,11 @@ export default function Home() {
       >
         Proceed
       </Button>
-       {error && <Text color="red" mt="5px" fontWeight={"600"} fontSize={"0.7rem"}>NOTICE: {error}</Text>}
+      {error && (
+        <Text color="red" mt="5px" fontWeight={"600"} fontSize={"0.7rem"}>
+          NOTICE: {error}
+        </Text>
+      )}
     </section>
   );
 }

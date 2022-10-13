@@ -1,6 +1,11 @@
 import { ethers } from "ethers";
-export { fetchNfts, fetchTokenPrice } from "./moralis.api";
-import { stableCoinToAddress } from './constants'
+export {
+  fetchNfts,
+  fetchTokenPrice,
+  getLatestTransactions,
+  getLatestTokenTransactions,
+} from "./moralis.api";
+import { stableCoinToAddress } from "./constants";
 import axios from "axios";
 import BigNumber from "bignumber.js";
 
@@ -21,8 +26,8 @@ export const toEther = (wei, decimals) => {
 };
 
 export const weiToEther = (ether, decimals) => {
-  return ethers.utils.parseUnits(BigNumber(ether).toString(),decimals)
-}
+  return ethers.utils.parseUnits(BigNumber(ether).toString(), decimals);
+};
 
 export const roundTo = (n, digits) => {
   var negative = false;
@@ -50,7 +55,7 @@ export const fetchCoinPrice = async (coin) => {
   return price;
 };
 
-export const isValidToken = (network,token) => {
-    if(stableCoinToAddress[network]?.[token]) return true;
-    return false;
-}
+export const isValidToken = (network, token) => {
+  if (stableCoinToAddress[network]?.[token]) return true;
+  return false;
+};

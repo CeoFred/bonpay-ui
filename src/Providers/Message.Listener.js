@@ -13,7 +13,7 @@ export default function MessageListener({ children }) {
 
   async function messageResolver(event) {
     if (event.data.type === "sdkData") {
-      const { chainId, recepient, value, nft, tokens } = event.data.config;
+      const { chainId, recepient, value, nft, tokens,transfer } = event.data.config;
 
       await dispatch(
         setUpNetworkConfig({
@@ -29,6 +29,7 @@ export default function MessageListener({ children }) {
           NFT_CONFIG: nft,
           NETWORK: chainId,
           TOKENS: tokens,
+          TRANSFER: transfer
         })
       );
     }

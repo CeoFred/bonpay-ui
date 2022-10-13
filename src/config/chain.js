@@ -9,7 +9,7 @@ export const chainConfig = {
     CHAIN_ID: "0x" + Number(4).toString(16),
     ID: "ethereum",
     thumb: "https://assets.coingecko.com/coins/images/279/thumb/ethereum.png",
-    large: "https://assets.coingecko.com/coins/images/279/large/ethereum.png",
+    large: "https://cryptologos.cc/logos/ethereum-eth-logo.png?v=023",
   },
   56: {
     RPC_URLS: [
@@ -117,5 +117,5 @@ export const chainConfig = {
       "https://assets.coingecko.com/coins/images/4713/thumb/matic-token-icon.png",
     large:
       "https://assets.coingecko.com/coins/images/4713/large/matic-token-icon.png",
-  }
+  },
 };

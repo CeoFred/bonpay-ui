@@ -11,6 +11,6 @@ export const selectNFTTranction = createSelector(
 );
 
 export const selectTokenTransaction = createSelector(
- (state) => state.transaction.TOKENS_PAYMENT_CONFIG,
+  (state) => state.transaction.TOKENS_PAYMENT_CONFIG,
   (tokenTransaction) => tokenTransaction
 );
