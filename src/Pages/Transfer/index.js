@@ -80,7 +80,7 @@ export default function Transfer() {
   }, [timeLeft]);
 
   useEffect(() => {
-    if (loading && NETWORK_ID && ACCEPTING_TOKENS) {
+    if (loading && NETWORK_ID) {
       init(TOKENS_PAYMENT_CONFIG.CONFIG, NETWORK_ID);
     }
   }, [connected, networkState, walletState, loading, NETWORK_ID]);
@@ -92,10 +92,10 @@ export default function Transfer() {
   async function init(TOKENS_PAYMENT_CONFIG, NETWORK_ID) {
     await dispatch(fetchUSDPriceOfNativeToken(chainConfig[NETWORK_ID].ID));
 
-    const stableTokenMetaInfo = TOKENS_PAYMENT_CONFIG.map(async (token) => {
+    const stableTokenMetaInfo = TOKENS_PAYMENT_CONFIG?.map(async (token) => {
       return { ...tokenMeta[token], isStable: true };
     });
-    const tokenInfo = await Promise.all(stableTokenMetaInfo);
+    const tokenInfo = await Promise.all(stableTokenMetaInfo || []);
     await setTokenData(tokenInfo);
     const nativeTokenInfo = {
       ...chainConfig[NETWORK_ID],
@@ -321,7 +321,7 @@ export default function Transfer() {
         const isEns = await jsonProvider.resolveName(transferFrom);
 
         if (isEns == null) {
-          setError("Invalid address/ENS");
+          setError(`Invalid address/ENS on ${chainConfig[NETWORK_ID].NETWORK_NAME} network.`);
           setConfirmedAddress(false);
           setIsVerifyingAddress(false);
           return;
@@ -332,7 +332,7 @@ export default function Transfer() {
       setConfirmedAddress(true);
       setIsVerifyingAddress(false);
     } catch (error) {
-      setError("Invalid address/ENS");
+      setError(`Invalid address/ENS,check andd try again.`);
       setConfirmedAddress(false);
       setIsVerifyingAddress(false);
     }
